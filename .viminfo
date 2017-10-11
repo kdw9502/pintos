@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/parse
+~MSle0~/process_wait
 
 # Last Substitute Search Pattern:
 ~MSle0&b.next
@@ -69,6 +69,7 @@ $
 :140
 
 # Search String History (newest to oldest):
+?/process_wait
 ? @$
 ?/parse
 ?/bool load
@@ -118,7 +119,6 @@ $
 ?/contains
 ?/bitmap_count
 ?/count
-?/set_m
 
 # Expression History (newest to oldest):
 
@@ -159,35 +159,35 @@ $
 	=
 
 # File marks:
-'0  8  0  ~/pintos
-'1  220  7  ~/pintos/src/userprog/process.c
-'2  1  0  ~/pintos/src/threads/init.c
-'3  2  7  ~/pintos/src/threads/init.h
-'4  26  0  ~/pintos/src/threads/init.c
-'5  428  33  ~/lib_hw1/testlib.c
-'6  4  0  ~/lib_hw1/Makefile
-'7  1  0  ~/lib_hw1/Makefile
-'8  11  24  ~/lib_hw1/Makefile
-'9  1  16  ~/lib_hw1/testlib.c
+'0  91  9  ~/pintos/src/userprog/process.c
+'1  8  0  ~/pintos
+'3  221  7  ~/pintos/src/userprog/process.c
+'4  1  0  ~/pintos/src/threads/init.c
+'5  2  7  ~/pintos/src/threads/init.h
+'6  26  0  ~/pintos/src/threads/init.c
+'7  428  33  ~/lib_hw1/testlib.c
+'8  4  0  ~/lib_hw1/Makefile
+'9  1  0  ~/lib_hw1/Makefile
 
 # Jumplist (newest first):
+-'  91  9  ~/pintos/src/userprog/process.c
+-'  82  39  ~/pintos/src/userprog/process.c
+-'  1  0  ~/pintos/src/userprog/process.c
 -'  8  0  ~/pintos
 -'  7  0  ~/
--'  1  0  ~/pintos
--'  220  7  ~/pintos/src/userprog/process.c
+-'  221  7  ~/pintos/src/userprog/process.c
 -'  22  7  ~/pintos/src/userprog/process.c
--'  200  7  ~/pintos/src/userprog/process.c
+-'  201  7  ~/pintos/src/userprog/process.c
 -'  64  5  ~/pintos/src/userprog/process.c
 -'  65  2  ~/pintos/src/userprog/process.c
 -'  62  12  ~/pintos/src/userprog/process.c
 -'  57  36  ~/pintos/src/userprog/process.c
 -'  54  23  ~/pintos/src/userprog/process.c
 -'  26  10  ~/pintos/src/userprog/process.c
--'  116  4  ~/pintos/src/userprog/process.c
+-'  117  4  ~/pintos/src/userprog/process.c
 -'  40  0  ~/pintos/src/userprog/process.c
 -'  29  8  ~/pintos/src/userprog/process.c
 -'  16  0  ~/pintos/src/userprog/process.c
--'  1  0  ~/pintos/src/userprog/process.c
 -'  1  0  ~/pintos/src/threads/init.c
 -'  2  7  ~/pintos/src/threads/init.h
 -'  1  0  ~/pintos/src/threads/init.h
@@ -267,14 +267,15 @@ $
 -'  138  33  ~/lib_hw1/main.c
 -'  350  28  ~/lib_hw1/main.c
 -'  381  0  ~/lib_hw1/main.c
--'  8  0  ~/lib_hw1/main.c
 
 # History of marks within files (newest to oldest):
 
 > ~/pintos/src/userprog/process.c
-	"	220	7
-	.	65	0
+	"	91	9
+	^	91	10
+	.	91	10
 	+	65	0
+	+	91	10
 
 > ~/pintos/src/threads/init.c
 	"	1	0
