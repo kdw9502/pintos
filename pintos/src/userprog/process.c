@@ -18,6 +18,8 @@
 #include "threads/thread.h"
 #include "threads/vaddr.h"
 
+#include "threads/malloc.h"
+
 static thread_func start_process NO_RETURN;
 static bool load (const char *cmdline, void (**eip) (void), void **esp);
 
@@ -88,7 +90,8 @@ start_process (void *file_name_)
 int
 process_wait (tid_t child_tid UNUSED) 
 {
-  return -1;
+	while(1);
+ 	return -1;
 }
 
 /* Free the current process's resources. */
@@ -213,19 +216,40 @@ load (const char *file_name, void (**eip) (void), void **esp)
   struct file *file = NULL;
   off_t file_ofset;
   bool success = false;
-  int i;
+  int i,j,argv_size=0;
+  char *temp_fn,*temp_str,argv_ptr;//temp file name copy, temp string ,argv_ptr for string pointer calculate
+ 
+  int argc=0,**argv,align_size;
+  temp_fn=(char*)malloc(sizeof(char)*(strlen(file_name)+1));
+  for (i=0,j=0;i<strlen(file_name);i++){
+	if(file_name[i]==' '){
+		if(j>0){
+		  if(temp_fn[j-1]=='\0')break;
+		}
+		temp_fn[j++]='\0';
+		argc++;
+	}
+	else{
+	  temp_fn[j++]=file_name[i];
 
+	}
+  }
+  if(temp_fn[j-1]!='\0'){
+	  temp_fn[j++]='\0';
+	  argc++;
+  }
+  argv_size=j;
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
   if (t->pagedir == NULL) 
     goto done;
   process_activate ();
-
+  printf("%s\n",temp_fn);
   /* Open executable file. */
-  file = filesys_open (file_name);
+  file = filesys_open (temp_fn); //temp fn에는 공백이 널문자로 치환되어 있기 때문에 첫 문장만을 string으로 취급한다.
   if (file == NULL) 
     {
-      printf ("load: %s: open failed\n", file_name);
+      printf ("load: %s: open failed\n", temp_fn);
       goto done; 
     }
 
@@ -238,7 +262,7 @@ load (const char *file_name, void (**eip) (void), void **esp)
       || ehdr.e_phentsize != sizeof (struct Elf32_Phdr)
       || ehdr.e_phnum > 1024) 
     {
-      printf ("load: %s: error loading executable\n", file_name);
+      printf ("load: %s: error loading executable\n", temp_fn);
       goto done; 
     }
 
@@ -300,17 +324,57 @@ load (const char *file_name, void (**eip) (void), void **esp)
           break;
         }
     }
-
+  printf("debug1\n");
   /* Set up stack. */
   if (!setup_stack (esp))
     goto done;
-
+  //esp에 phys_base
   /* Start address. */
   *eip = (void (*) (void)) ehdr.e_entry;
+  /*todo*/
+  argv_ptr = (char*) *esp - argv_size; // arg_ptr~ phys_base에 argv string이 저장될 예정
+  printf("debug1\n");
+  *esp = (void*) ((uintptr_t) argv_ptr & 0xfffffffc);// ptr을 4로나눈 몫 
+  printf("debug1\n");
+  align_size = (uintptr_t) argv_ptr & 0x00000003;//ptr을 4로나눈 나머지
+  printf("debug1\n");
+  for(i=0; i<align_size; ++i){
+	  printf("%08p ",*esp);
+	  *((char*)*esp+i)=0;// word_align
+	  printf("i ");
+  }
+  printf("debug2\n");
+  *esp=(void**)*esp-argc-1;
+  printf("debug 3\n");
+  argv = * ((char***) *esp) = (char**) ((void**) *esp );
+  *esp=(void**)*esp-1;
+  
+  for (i = 0; i < argc; ++i)
+  {
+	  argv[i] = argv_ptr;
+	  j = 0;
+	  do
+	  {
+		  argv[i][j] = temp_fn[j];
+	  } 
+	  while (temp_fn[j++]);
+	  temp_fn = temp_fn+j;
+	  argv_ptr += j;
+  }
+  argv[argc] = NULL;
+  * ( (int32_t*) ((void**) *esp - 1) ) = argc;
+  * ( (void (**) (void)) ((void**) *esp - 2) ) = NULL;
 
+  *esp = (void*) ((void**) *esp - 2);
+
+  printf("debug2\n");
+  hex_dump((uintptr_t) *esp, (const char *) *esp, (uintptr_t) PHYS_BASE - (uintptr_t) *esp, true);
+
+
+  /*todo */
   success = true;
 
- done:
+done:
   /* We arrive here whether the load is successful or not. */
   file_close (file);
   return success;
