@@ -205,11 +205,14 @@ thread_create (const char *name, int priority,
   sf->ebp = 0;
 
   intr_set_level (old_level);
+  if(is_thread(running_thread())){
+	  list_push_back(&thread_current()->child_list,(struct list_elem*)&t->allelem);
+  }
+  else{
 
+  }
   /* Add to run queue. */
   thread_unblock (t);
-
-  return tid;
 }
 
 /* Puts the current thread to sleep.  It will not be scheduled
@@ -470,6 +473,11 @@ init_thread (struct thread *t, const char *name, int priority)
   t->priority = priority;
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
+  t->exit_status=-1;
+  t->loaded=t->abort=true;
+  list_init(&t->child_list);
+  sema_init(&t->wait_sema,0);
+  sema_init(&t->exit_sema,0);
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and

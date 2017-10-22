@@ -1,289 +1,4 @@
 ls
-passwd
-ls
-pwd
-sudo apt-get install qemu
-ls -a
-tar xvzf pintos_modified.tar.gz 
-ls
-ls -a
-vi .bashrc
-ls
-cd pintos/
-ls
-cd src
-ls
-cd threads/
-ls
-make
-ls
-cd ..
-ls
-cd utils/
-ls
-pintos -v -- -q run alarm-multiple
-./pintos -v -- -q run alarm-multiple
-.pintos -v -- -q run alarm-multiple
-./pintos -v -- -q run alarm-multiple
-cd ..cd..
-cd ..
-ls
-../utils/pintos -v -- -q run alarm-multiple
-pintos -v -- -q run alarm-multiple
-ls
-vi utils/
-cd utils/
-ls
-./pintos
-./pintos -h
-./pintos -v -q run alarm-multiple
-pintos -v -q run alarm-multiple
-ls
-cd ..
-ls
-make clean
-ls
-make
-clean
-make
-make clean
-ls
-make
-cd ..
-ls
-cd ..
-ls
-cd pintos/
-ls
-exit
-ls
-rm pintod
-rm pintos
-ls
-cd pintos
-ls
-cd src
-ls
-make clean
-make
-ls
-cd threads
-ls
-make
-ls
-cd ..
-ls
-utils
-cd utils
-ls
-pintos
-./pintos
-./pintos -v -q run alarm-multiple
-./pintos -v  run alarm-multiple
-./pintos run alarm-multiple
-cd ..
-ls
-vi threads
-cd threads
-make
-ls
-clean
-make
-cd ..
-cd utils
-pintos run alarm-multiple
-./pintos run alarm-multiple
-ls -a
-cd ..
-ls -a
-cd ..
-ls
-cd ..
-ls
-ls -a
-ls
-cd pintos/
-ls
-cd src/
-ls
-cd utils
-ls
-v pintos-gdb
-vi pintos-gdb
-l
-cd ..
-rcd threads
-cd threads
-ls
-vi Make.vars 
-exit
-ls
-cd pintos/
-ls
-cd src
-ls
-cd utils
-make
-cd ,,
-cd ..
-ls
-ls -a
-vi .bashrc
-ls
-cd ..
-cd
-ls
-vi pintos
-cd pintos/
-ls
-cd src/
-ls
-cd threads/
-ls
-vi Make.vers
-vi Make.vars
-cd ..
-ls
-vi userprog/
-cd userprog/
-ls
-vi Make.vars 
-:q
-cd ..
-cd filesys/
-ls
-vi Make.vars 
-cd ..
-cd vm
-ls
-vi Make.vars 
-:q
-cd ..
-ls
-cd utils/
-ls
-vi pintos
-cd ..
-cd threads/
-make
-:q
-cd ..
-ls
-rm pintos
-rm
-rm --help
-cd pintos/
-cd th
-ls
-cd ..
-vi .bashrc
-cd pintos/
-cd thread
-ls
-cd src/
-cd threads/
-make
-ls
-cd build/
-ls
-cd ..
-rm build/
-rm --d build/
-cd build/
-rm -a
-:q
-cd ..
-ls
-cd utils/
-pintos
-cd ..
-ls
-cd threads/
-pintos
-pintos -v -- -q run alarm-multiple
-make clean
-ls
-make
-pintos -v -- -q run alarm-multiple
-cd ..
-ls
-cd utils
-make clean
-make
-cd ..
-ls
-vi threads/
-cd threads/
-ls
-pintos -v -- -q run alarm-multiple
-cd ..
-ls
-cd ..
-ls
-tar xvzf pintos_modified.tar.gz 
-cd pintos/
-cd src/
-cd threads/
-ls
-vi Make.vars 
-cd ..
-cd userprog/
-ls
-vi Make.vars
-cd ..
-vi filesys/
-cd filesys/
-vi Make.vars
-cd ..
-cd vm
-ls
-vi Make.vars 
-:q
-cd .
-cd ..
-cd utils/
-vi pintos
-cd ..
-cd threads/
-make
-../utils/pintos run alarm-multiple
-pintos -v -- -q run alarm-multiple
-../utils/pintos run alarm-multiple
-cd ..
-vi devices/
-cd devices/
-vi shutdown.
-vi shutdown.c
-cd ..
-cd threads/
-make clean
-make
-../utils/pintos --v -- -q run alarm-multiple
-cd ..
-cat ~/.vimrc
-ctags -R *
-cat ~/.vimrc
-cd ..
-ls
-ls -a
-ls
-vi pintos
-cd pintos/
-cd src/
-cd tests
-ls
-:q
-cd ..
-ls
-cd threads/
-make check
-../utils/pintos --v -- -q run alarm-multiple
-ls
-restart
-exi
-eixt
-exit
-ls
 vi pintos
 cd pintos/
 ls
@@ -1278,3 +993,1008 @@ cd ..
 cd userprog/
 ls
 vi process.c
+ls
+vi pintos
+cd pintos/
+ls
+cd ..
+ls
+git init
+ls
+rm lib_hw1.tar 
+ls
+cd 20141494/
+ls
+cd ..
+ls
+rm os_hw1_tester.tar.gz 
+ls
+rm os_hw1_tester/
+rm help
+help rm
+man rm
+rm -r os_hw1_tester/
+ls
+rm pintos_modified.tar.gz 
+ls
+git add .
+commit -m "new"
+git commit -m "new"
+git remote origin https://github.com/kdw9502/pintos.git
+git remote add origin https://github.com/kdw9502/pintos.git
+git push -u origin master
+ls
+vi pintos/
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+cd ..
+ls
+cd userprog/
+ls
+vi process.c
+:q
+cd ..
+ls
+git init
+ls
+git branch
+git branch proj0 master
+ls
+git branch
+git add 
+git add .
+git checkout proj0
+git commit -m 
+git commit -m "branch?"
+git status
+git diff
+git commit
+git push origin proj0
+git checkout master
+ls
+git status
+exit
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+vi syscall.h
+vi syscall.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+cd ..
+cd userprog/
+ls
+vi process.c
+syscall.c
+vi syscall.c
+vi exception.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+cd ..
+cd userprog/
+ls
+vi syscall.c
+vi syscall.h
+vi syscall.c
+vi syscall.h
+vi syscall.c
+ls
+vi process.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+vi process.c
+ls
+cd pintos/
+ls
+cd src/
+cd userprog/
+ls
+vi process.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+cd ..
+cd threads/
+ls
+vi thread.h
+ld
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd y
+cd userprog/
+ls
+vi process.c
+ls
+cd ..
+ls
+vi process.c
+cd userprog/
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+cd ..
+ls
+cd userprog/
+ls
+cd build/
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+cd ..
+ls
+cd ..
+ls
+cd tests/
+ls
+cd userprog/
+ls
+vi args_none.ck
+vi args_multiple.ck
+vi args.c
+vi args_none.c
+vi args_none.ck
+vi args_single.ck
+vi bad-jump2.ck
+vi bad-jump2.c
+vi args_many.ck
+:q
+cd ..
+ls
+cd userprog/
+ls
+cd build
+ls
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+ls
+cd tests/
+ls
+cd ..
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+cd ..
+ls
+make
+ls
+ci process.c
+vi process.c
+make
+ls
+cd build/
+ls
+cd tests/
+ls
+cd userprog/
+ls
+cd ..
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-none -- -q  -f run args-none
+pintos
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-none -- -q  -f run args-none
+cd ..
+cd threads/
+ls
+make check
+make
+make check
+pintos -v -- -q run alarm-multiple 
+cd ..
+ls
+cd src/
+ls
+cd ..
+ls
+cd tests/
+ls
+./make-grade
+make-grade
+make
+cd userprog/
+ls
+cd make
+cd ..
+ls
+cd src/
+ls
+cd user
+cd userprog/
+ls
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-man -a args-none -- -q  -f run args-none
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-none -- -q  -f run args-none
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-many -- -q  -f run args-none
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-many -- -q  -f run args-many
+ls
+cd ..
+ls
+cd tests/
+ls
+cd userprog/
+ls
+cd ..
+ls
+cd userprog/
+ls
+cd build/
+ls
+cd t
+cd tests/
+ls
+cd userprog/
+ls
+cd ..
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-many -a args-many -- -q  -f run args-many
+cd ..
+ls
+cd ..
+cd pintos/
+ls
+cd src/
+cd threads/
+make
+Prototype mismatch
+pintos –v -- -q run alarm-multiple
+cd ..
+ls
+cd utils/
+ls
+cd ..
+vi .bashrc
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+cd build/
+ls
+pintos –v -- -q run alarm-multiple
+ls
+cd ..
+ls
+cd ..
+ls
+cd utils/
+ls
+vi pintos
+cd ..
+cd threads/
+cd build/
+~
+$HOME
+cd $HOME
+cd pintos/
+ls
+cd src/
+cd userprog/
+make
+make check
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none 
+cd build/
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none 
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none 
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none 
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none 
+ot present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc00272ba
+ot present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc00272ba
+ot present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc00272ba
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi process.c
+make check
+vi process.c
+make
+cd build/
+Call stack: 0xc0028480 0xc002b67c 0xc002b724 0xc00219dd 0xc0021b0f 0xc00272ba 0xc0026ab0 0xc002a319 0xc0026c53 0xc002a5ce 0xc00211e6.
+The `backtrace' program can make call stacks u
+
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+pintos -v -k -T 60 --qemu  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+pintos -v -k -T 60 --bochs  --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q  -f run args-none
+cd ..
+ls
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi process.
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+ls
+vi process.c
+make
+ls
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+vi ../process.c
+../make
+cd ..
+make
+cd build/
+resent error writing page in kern
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+cd ..
+git add process.c
+git commit -m "임시"
+git push
+vi process.c
+make
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+git pull
+cd ..
+vi ../process.c
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+make
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi process.c
+make
+cd build
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+vi ../process.c
+cd ..
+add *
+git add *
+git commit -m "arg pass"
+git push
+ls
+cd pintos/
+ls
+cd src/
+cd userprog/
+ls
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+cd ..
+ls
+cd threads/
+ls
+vi thread.c
+vi thread.h
+cd ..
+ls
+cd userprog/
+ls
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+make check
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-many
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-many
+vi ../process.c
+cd ..
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-many
+vi ../process.c
+cd ..
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-many
+cd ..
+vi process.c
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+make check
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi syscall.h
+vi syscall.c
+vi syscall.h
+cd ..
+cd lib/
+ls
+vi syscall-nr.h 
+ls
+vi syscall-nr.h 
+ls
+cd user/
+ls
+vi syscall.c
+vi syscall.h
+vi syscall.c
+cd ..
+vi syscall-nr.h 
+cd ..
+cd s
+cd src
+ls
+cd threads/
+ls
+vi thread.c
+vi thread.h
+lss
+ls
+vi thread.h
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+ls
+cd ..
+ls
+vi exception.c
+ls
+vi syscall.h
+cd ..
+cd threads/
+ls
+vi thread.c
+vi thread.h
+vi thread.c
+cd ..
+cd userprog/
+ls
+vi syscall.c 
+cd ../threads/
+vi thread.c
+cd ..
+ls
+cd userprog/
+ls
+make
+cd ..
+cd threads/
+vi thread.c
+make
+vi thread.h
+cd ../userprog/
+make
+cd ../threads/
+vi thread.c
+make
+vi thread.h
+vi thread.c
+vi thread.h
+cd ../userprog/
+make
+vi process.c
+make
+vi exception.c
+make
+make check
+ls
+rename
+rename syscall.c syscall1.c
+ls
+mv syscall.c sy.c
+ls
+vi syscall.c
+make
+vi syscall.c
+make
+make check
+vi process.c
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+make
+cd build/
+make check
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+vi ../process.c
+cd ..
+ls
+vi ../threads/thread.c
+vi ../process.c
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+build/make
+/build/make
+cd build/
+make
+cd ..
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi exception.c
+cd ..
+cd threads/
+ls
+vi init.c
+ls
+cd ..
+cd userprog/
+ls
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+ls
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd pr
+cd ..
+cd process.c
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+vi ../process.c
+cd ..
+ls
+vi exception.c
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+ls
+vi process.c
+ls
+vi exception.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd..
+cd ..
+vi exception.c
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+ls
+ex
+vi exception.c
+ls
+vi syscall.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi syscall.c
+vi process.c
+vi exception.c
+make
+cd build/
+ls
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+vi exception.c
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+cd ..
+vi process.c
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi process.c
+vo ../process.
+vo ../process.c
+vi ../process.c
+make
+vi ../process.c
+make
+cd ..
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+cd ..
+make
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi process.c
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+cd ..
+cd threads/
+vi thread.c
+cd ..
+cd userprog/
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi thread.c
+cd ../process.c
+vi ../process.c
+make
+vi thread.c
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+cd pintos/
+ls
+cd src/
+ls
+cd userprog/
+ls
+cd build/
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tests/userprog/args-none -a args-none -- -q -f run args-none
+vi ../process.c
+make
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tes
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tes
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tes
+vi ../process.c
+make
+pintos -v -k -T 60 --qemu --filesys-size=2 -p tes
+vi ../process.c
+exit

@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/parse
+~MSle0~/user
 
 # Last Substitute Search Pattern:
 ~MSle0&b.next
@@ -18,107 +18,107 @@ $
 
 # Command Line History (newest to oldest):
 :q
-:w
-:q!
-:377
-:352
-:322
-:222
-:393
-:253
-:Q
-:11
-:!1
-:42
-:$2
-:split bitmap_scan_and_flip.output
-:split bitmap_scan_and_flip.out
 :wq
-:88
-:204
-:374
-:ㅈ
+:w
+:210
+:82
+:149
+:84
+:58
+:q!
+:181
+:172
+:166
+:180
+:56
+:Wq
 :W
-:397
-:343
-:355
-:#55
-:342
-:vsplit bitmap.h
-:split bitmap.c
-:330
-:3303
-:375
-:318
-:325
-:32
-:295
-:282
+:Q
+:416
+:426
+:427
+:420
+:419
+:319
+:406
+:395
+:393
 :273
-:267
-:106
-:261
+:299
+:326
+:252
+:50
+:231
+:219
+:94
+:150
+:116
+:476
+:209
+:477
+:208
+:61
+:112
+:118
+:130
+:60
+:269
+:119
+:57
 :5
-:split main.c
-:vsplit main.c
-:vsplit hash.c
-:split hash.h
-:vsplit hash.h
-:s
-:224
-:140
+:42
 
 # Search String History (newest to oldest):
 ? @$
-?/parse
-?/bool load
+?/user
+?/!user
+?/thread
+?/sys_
+?/sys_ex
+?/sys
+?/sys_exit
+?/sys_e
+?/start
 ?/load
-?/execute_thread
-?/process_ex
-?/execute_thr
-?/execute_thre
+?/loasd
+?/print(
+?/print
+?/free
+?/user==
+?/palloc
+?/thread ex
+?/syscall_init
+?/dy
+?/load_af
+?/execute_th
+?/exe
 ?/execute
-?/execute_t
-?/execute_th	
-?/syscall_i
-?/run_ta
-?/system_init
-?/bit
-?/hex_dump
-?/bitmap_scan
-?/bitmap
-?/scan
-?/352
-?/bitmap_set
-?/bit_set
-?/expand
-?/swap
-?/flip
-?/scanf
-?/bitmap_sc
-?/bitmap_all
-?/Dump
-?/dump
-?/bitmap_size
-?/%u
-?/bitmap_mark
-?/mark
-?/\~
-?/~s
-?/~
-?/Bit
-?/bitmap_create
-?/create
-?/alg
-?/371
-?/struct
-?/none
-?/test
-?/bitmap_any
-?/contains
-?/bitmap_count
-?/count
-?/set_m
+?/219
+?/shutdown
+?/shutdown_power
+?/runn
+?/if(t
+?/is_thread
+?/thread_create
+?/if(t->tid
+?/thread_cre
+?/list_push
+?/init_
+?/init_th
+?/init
+?/process_execute
+?/process_excute
+?/process
+?/61
+?/sema_up
+?/while
+?/setup_st
+?/align
+?/argv
+?/kernel
+?/open fail
+?/open
+?/export
 
 # Expression History (newest to oldest):
 
@@ -128,155 +128,638 @@ $
 
 # Registers:
 ""0	LINE	0
-		else if(arg[0][0]=='b'&&arg[0][1]=='i'&&arg[0][2]=='t'){//오류 임시
+	  if(!write){thread_exit();return;}
 "1	LINE	0
-		else if(arg[0][0]=='b'&&arg[0][1]=='i'&&arg[0][2]=='t'){//오류 임시
+						        tid = TID_ERROR;
 "2	LINE	0
-			}
-"3	LINE	0
-			else{
-"4	LINE	0
-			if(!bitmap->bits)bitmap->bits=(size_t)malloc(bitmap->bit_cnt);
-"5	LINE	0
-		else if(!strcmp(op,"bitmap_scan_and_flip")){
-			printf("%u\n",(size_t)bitmap_scan_and_flip(ex_bit,input[0],input[1],!strcmp(arg4,"true")));
-		}
-"6	LINE	0
-			printf("%s",arg[0]);
+					    else if (tid == TID_LOAD_FAIL)
+"3	CHAR	0
+	#include "userprog/syscall.h"
+	#include <stdio.h>
+	#include <syscall-nr.h>
+	#include "threads/interrupt.h"
+	#include "threads/thread.h"
+	
+	#include <stdint.h>
+	#include "lib/user/syscall.h"
+	#include "threads/vaddr.h"
+	
+	#define STACK_BLOCK   4
+	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
+	
+	inline static bool chk_user_ptr (const void *);
+	inline static bool chk_valid_ptr (const void *);
+	static void syscall_handler (struct intr_frame *);
+	
+	/* syscalls... */
+	static int    syscall_fibonacci (int n);
+	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
+	static void   syscall_halt (void);
+	static void   syscall_exit (int status);
+	static pid_t  syscall_exec (const char *file);
+	static int    syscall_wait (pid_t pid);
+	static int    syscall_read (int fd, void *buffer, unsigned size);
+	static int    syscall_write (int fd, void *buffer, unsigned size);
+	
+		void
+	syscall_init (void) 
+	{
+		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+	}
+	
+		inline static bool 
+	chk_user_ptr (const void *ptr)
+	{
+		return is_user_vaddr(ptr);
+	}
+	
+		inline static bool
+	chk_valid_ptr (const void *ptr)
+	{
+		return chk_user_ptr (ptr);
+	}
+	
+		inline static bool
+	chk_valid_sp (const void *sp_top, int arg_cnt)
+	{
+		ASSERT (arg_cnt > 0);
+		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
+"4	CHAR	0
+	#include "userprog/syscall.h"
+	#include <stdio.h>
+	#include <syscall-nr.h>
+	#include "threads/interrupt.h"
+	#include "threads/thread.h"
+	
+	#include <stdint.h>
+	#include "lib/user/syscall.h"
+	#include "threads/vaddr.h"
+	
+	#define STACK_BLOCK   4
+	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
+	
+	inline static bool chk_user_ptr (const void *);
+	inline static bool chk_valid_ptr (const void *);
+	static void syscall_handler (struct intr_frame *);
+	
+	/* syscalls... */
+	static int    syscall_fibonacci (int n);
+	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
+	static void   syscall_halt (void);
+	static void   syscall_exit (int status);
+	static pid_t  syscall_exec (const char *file);
+	static int    syscall_wait (pid_t pid);
+	static int    syscall_read (int fd, void *buffer, unsigned size);
+	static int    syscall_write (int fd, void *buffer, unsigned size);
+	
+		void
+	syscall_init (void) 
+	{
+		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+	}
+	
+		inline static bool 
+	chk_user_ptr (const void *ptr)
+	{
+		return is_user_vaddr(ptr);
+	}
+	
+		inline static bool
+	chk_valid_ptr (const void *ptr)
+	{
+		return chk_user_ptr (ptr);
+	}
+	
+		inline static bool
+	chk_valid_sp (const void *sp_top, int arg_cnt)
+	{
+		ASSERT (arg_cnt > 0);
+		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
+"5	CHAR	0
+	#include "userprog/syscall.h"
+	#include <stdio.h>
+	#include <syscall-nr.h>
+	#include "threads/interrupt.h"
+	#include "threads/thread.h"
+	
+	#include <stdint.h>
+	#include "lib/user/syscall.h"
+	#include "threads/vaddr.h"
+	
+	#define STACK_BLOCK   4
+	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
+	
+	inline static bool chk_user_ptr (const void *);
+	inline static bool chk_valid_ptr (const void *);
+	static void syscall_handler (struct intr_frame *);
+	
+	/* syscalls... */
+	static int    syscall_fibonacci (int n);
+	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
+	static void   syscall_halt (void);
+	static void   syscall_exit (int status);
+	static pid_t  syscall_exec (const char *file);
+	static int    syscall_wait (pid_t pid);
+	static int    syscall_read (int fd, void *buffer, unsigned size);
+	static int    syscall_write (int fd, void *buffer, unsigned size);
+	
+		void
+	syscall_init (void) 
+	{
+		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+	}
+	
+		inline static bool 
+	chk_user_ptr (const void *ptr)
+	{
+		return is_user_vaddr(ptr);
+	}
+	
+		inline static bool
+	chk_valid_ptr (const void *ptr)
+	{
+		return chk_user_ptr (ptr);
+	}
+	
+		inline static bool
+	chk_valid_sp (const void *sp_top, int arg_cnt)
+	{
+		ASSERT (arg_cnt > 0);
+		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
+"6	CHAR	0
+	#include "userprog/syscall.h"
+	#include <stdio.h>
+	#include <syscall-nr.h>
+	#include "threads/interrupt.h"
+	#include "threads/thread.h"
+	
+	#include <stdint.h>
+	#include "lib/user/syscall.h"
+	#include "threads/vaddr.h"
+	
+	#define STACK_BLOCK   4
+	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
+	
+	inline static bool chk_user_ptr (const void *);
+	inline static bool chk_valid_ptr (const void *);
+	static void syscall_handler (struct intr_frame *);
+	
+	/* syscalls... */
+	static int    syscall_fibonacci (int n);
+	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
+	static void   syscall_halt (void);
+	static void   syscall_exit (int status);
+	static pid_t  syscall_exec (const char *file);
+	static int    syscall_wait (pid_t pid);
+	static int    syscall_read (int fd, void *buffer, unsigned size);
+	static int    syscall_write (int fd, void *buffer, unsigned size);
+	
+		void
+	syscall_init (void) 
+	{
+		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+	}
+	
+		inline static bool 
+	chk_user_ptr (const void *ptr)
+	{
+		return is_user_vaddr(ptr);
+	}
+	
+		inline static bool
+	chk_valid_ptr (const void *ptr)
+	{
+		return chk_user_ptr (ptr);
+	}
+	
+		inline static bool
+	chk_valid_sp (const void *sp_top, int arg_cnt)
+	{
+		ASSERT (arg_cnt > 0);
+		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
 "7	LINE	0
-			printf("%s",arg[0]);
+		   */
 "8	LINE	0
-		else if(/*strncmp(arg[0],"bit",3)==0*/){
-	//		printf("%s",arg[0]);
-	//		bit_exe(arg[0],arg[1],arg[2],arg[3],arg[4],arg[5]);
-	//	}
+	        * free resources that current process owned.
 "9	LINE	0
-		else if(strncmp(arg[0],"bit",3)==0){
-			printf("%s",arg[0]);
-			bit_exe(arg[0],arg[1],arg[2],arg[3],arg[4],arg[5]);
-		}
+	  /*
 "-	CHAR	0
-	=
+	/
 
 # File marks:
-'0  8  0  ~/pintos
-'1  220  7  ~/pintos/src/userprog/process.c
-'2  1  0  ~/pintos/src/threads/init.c
-'3  2  7  ~/pintos/src/threads/init.h
-'4  26  0  ~/pintos/src/threads/init.c
-'5  428  33  ~/lib_hw1/testlib.c
-'6  4  0  ~/lib_hw1/Makefile
-'7  1  0  ~/lib_hw1/Makefile
-'8  11  24  ~/lib_hw1/Makefile
-'9  1  16  ~/lib_hw1/testlib.c
+'0  8  0  ~/pintos/src/threads
+'1  147  10  ~/pintos/src/userprog/exception.c
+'2  210  60  ~/pintos/src/userprog/process.c
+'3  166  45  ~/pintos/src/userprog/process.c
+'4  82  28  ~/pintos/src/userprog/process.c
+'5  84  33  ~/pintos/src/userprog/process.c
+'6  645  0  ~/pintos/src/userprog/process.c
+'7  1  0  ~/pintos/src/userprog/process.c
+'8  1  1  ~/pintos/src/userprog/process.c
+'9  1  0  ~/pintos/src/userprog/process.c
 
 # Jumplist (newest first):
--'  8  0  ~/pintos
--'  7  0  ~/
--'  1  0  ~/pintos
--'  220  7  ~/pintos/src/userprog/process.c
--'  22  7  ~/pintos/src/userprog/process.c
--'  200  7  ~/pintos/src/userprog/process.c
--'  64  5  ~/pintos/src/userprog/process.c
--'  65  2  ~/pintos/src/userprog/process.c
--'  62  12  ~/pintos/src/userprog/process.c
--'  57  36  ~/pintos/src/userprog/process.c
--'  54  23  ~/pintos/src/userprog/process.c
--'  26  10  ~/pintos/src/userprog/process.c
--'  116  4  ~/pintos/src/userprog/process.c
--'  40  0  ~/pintos/src/userprog/process.c
--'  29  8  ~/pintos/src/userprog/process.c
--'  16  0  ~/pintos/src/userprog/process.c
+-'  8  0  ~/pintos/src/threads
+-'  147  10  ~/pintos/src/userprog/exception.c
+-'  98  0  ~/pintos/src/userprog/exception.c
+-'  1  0  ~/pintos/src/userprog/exception.c
+-'  210  60  ~/pintos/src/userprog/process.c
 -'  1  0  ~/pintos/src/userprog/process.c
--'  1  0  ~/pintos/src/threads/init.c
--'  2  7  ~/pintos/src/threads/init.h
--'  1  0  ~/pintos/src/threads/init.h
--'  26  0  ~/pintos/src/threads/init.c
--'  293  0  ~/pintos/src/threads/init.c
--'  105  0  ~/pintos/src/threads/init.c
--'  428  33  ~/lib_hw1/testlib.c
--'  1  0  ~/lib_hw1/testlib.c
--'  4  0  ~/lib_hw1/Makefile
--'  1  0  ~/lib_hw1/Makefile
--'  11  24  ~/lib_hw1/Makefile
--'  452  0  ~/lib_hw1/main.c
--'  263  0  ~/lib_hw1/main.c
--'  1  0  ~/lib_hw1/main.c
--'  1  0  ~/lib_hw1/mainc
--'  374  2  ~/lib_hw1/bitmap.c
--'  11  23  ~/lib_hw1/bitmap.c
--'  1  0  ~/lib_hw1/bitmap.c
--'  38  33  ~/lib_hw1/main.c
--'  345  8  ~/lib_hw1/main.c
--'  131  2  ~/lib_hw1/main.c
--'  122  0  ~/lib_hw1/main.c
--'  65  0  ~/lib_hw1/bitmap.c
--'  150  0  ~/lib_hw1/bitmap.c
--'  112  2  ~/lib_hw1/bitmap.c
--'  91  10  ~/lib_hw1/bitmap.c
--'  388  35  ~/lib_hw1/bitmap.c
--'  384  15  ~/lib_hw1/bitmap.c
--'  385  19  ~/lib_hw1/bitmap.c
--'  2  0  ~/os_hw1_tester/bitmap_expand.out
--'  1  0  ~/os_hw1_tester/bitmap_expand.out
--'  1  0  ~/os_hw1_tester/bitmap_expand.output
--'  27  1  ~/lib_hw1/main.c
--'  365  9  ~/lib_hw1/main.c
--'  364  28  ~/lib_hw1/main.c
--'  392  1  ~/lib_hw1/main.c
--'  129  12  ~/lib_hw1/main.c
--'  116  6  ~/lib_hw1/main.c
--'  115  12  ~/lib_hw1/main.c
--'  87  38  ~/lib_hw1/main.c
--'  55  13  ~/lib_hw1/main.c
--'  366  1  ~/lib_hw1/main.c
--'  398  89  ~/lib_hw1/main.c
--'  389  21  ~/lib_hw1/main.c
--'  1  0  ~/os_hw1_tester/bitmap_all.output
--'  1  0  ~/os_hw1_tester/bitmap_all.out
--'  88  50  ~/lib_hw1/main.c
--'  347  5  ~/a/lib_hw1/testlib.c
--'  97  27  ~/a/lib_hw1/testlib.c
--'  1  0  ~/a/lib_hw1/testlib.c
--'  65  1  ~/lib_hw1/main.c
--'  8  0  ~/lib_hw1
--'  117  0  ~/lib_hw1/main.c
--'  1  0  ~/os_hw1_tester/main.c
--'  1  0  ~/os_hw1_tester/hash_apply.in
--'  1  0  ~/os_hw1_tester/hash_apply
--'  418  2  ~/lib_hw1/main.c
--'  417  24  ~/lib_hw1/main.c
--'  399  9  ~/lib_hw1/main.c
--'  83  0  ~/lib_hw1/main.c
--'  171  1  ~/lib_hw1/main.c
--'  76  0  ~/lib_hw1/main.c
--'  426  8  ~/lib_hw1/main.c
--'  358  20  ~/lib_hw1/main.c
--'  357  28  ~/lib_hw1/main.c
--'  396  61  ~/lib_hw1/main.c
--'  376  9  ~/lib_hw1/main.c
--'  375  1  ~/lib_hw1/main.c
--'  374  68  ~/lib_hw1/main.c
--'  428  1  ~/lib_hw1/main.c
--'  377  55  ~/lib_hw1/main.c
--'  355  30  ~/lib_hw1/main.c
--'  380  58  ~/lib_hw1/main.c
--'  70  30  ~/lib_hw1/main.c
--'  412  2  ~/lib_hw1/main.c
--'  411  19  ~/lib_hw1/main.c
--'  138  33  ~/lib_hw1/main.c
--'  350  28  ~/lib_hw1/main.c
--'  381  0  ~/lib_hw1/main.c
--'  8  0  ~/lib_hw1/main.c
+-'  166  45  ~/pintos/src/userprog/process.c
+-'  82  28  ~/pintos/src/userprog/process.c
+-'  84  33  ~/pintos/src/userprog/process.c
+-'  645  0  ~/pintos/src/userprog/process.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/build/process.c
+-'  1  0  ~/pintos/src/userprog/exception.
+-'  9  10  ~/pintos/src/threads/thread.h
+-'  1  0  ~/pintos/src/threads/thread.h
+-'  74  29  ~/pintos/src/threads/thread.c
+-'  563  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  704  0  ~/pintos/src/userprog/process.c
+-'  1  0  ~/pintos/src/userprog/build/thread.c
+-'  99  0  ~/pintos/src/threads/thread.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  706  0  ~/pintos/src/userprog/process.c
+-'  705  7  ~/pintos/src/userprog/process.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  647  0  ~/pintos/src/userprog/process.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/build/process.c
+-'  1  0  ~/pintos/src/userprog/exception.
+-'  9  10  ~/pintos/src/threads/thread.h
+-'  1  0  ~/pintos/src/threads/thread.h
+-'  74  29  ~/pintos/src/threads/thread.c
+-'  563  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/userprog/build/thread.c
+-'  99  0  ~/pintos/src/threads/thread.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  708  0  ~/pintos/src/userprog/process.c
+-'  707  7  ~/pintos/src/userprog/process.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/build/process.c
+-'  1  0  ~/pintos/src/userprog/exception.
+-'  9  10  ~/pintos/src/threads/thread.h
+-'  1  0  ~/pintos/src/threads/thread.h
+-'  74  29  ~/pintos/src/threads/thread.c
+-'  563  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/userprog/build/thread.c
+-'  99  0  ~/pintos/src/threads/thread.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/build/process.c
+-'  1  0  ~/pintos/src/userprog/exception.
+-'  9  10  ~/pintos/src/threads/thread.h
+-'  1  0  ~/pintos/src/threads/thread.h
+-'  74  29  ~/pintos/src/threads/thread.c
+-'  563  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/userprog/build/thread.c
+-'  99  0  ~/pintos/src/threads/thread.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  276  0  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/syscall.c
+-'  210  60  ~/pintos/src/userprog/process.c
+-'  147  10  ~/pintos/src/userprog/exception.c
+-'  98  0  ~/pintos/src/userprog/exception.c
 
 # History of marks within files (newest to oldest):
 
+> ~/pintos/src/userprog/exception.c
+	"	147	10
+	^	152	17
+	.	152	16
+	+	150	30
+	+	150	36
+	+	91	0
+	+	150	10
+	+	161	0
+	+	151	0
+	+	150	5
+	+	151	10
+	+	152	16
+
 > ~/pintos/src/userprog/process.c
-	"	220	7
-	.	65	0
-	+	65	0
+	"	210	60
+	^	210	61
+	.	210	60
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	20
+	+	1	0
+	+	1	1
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	1
+	+	1	2
+	+	1	3
+	+	1	10
+	+	1	0
+	+	1	40
+	+	1	55
+	+	1	0
+	+	1	40
+	+	1	30
+	+	1	57
+	+	1	1
+	+	1	40
+	+	1	0
+	+	1	55
+	+	1	19
+	+	1	1
+	+	1	41
+	+	1	1
+	+	1	40
+	+	1	54
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	2
+	+	1	1
+	+	1	44
+	+	1	15
+	+	1	21
+	+	1	0
+	+	1	41
+	+	1	0
+	+	1	0
+	+	1	41
+	+	1	13
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	26
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	43
+	+	1	36
+	+	1	0
+	+	1	20
+	+	1	53
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	11
+	+	1	26
+	+	1	32
+	+	1	33
+	+	1	53
+	+	1	10
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	36
+	+	1	0
+	+	1	1
+	+	1	1
+	+	1	1
+	+	1	21
+	+	1	57
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	62
+	+	1	0
+	+	646	0
+	+	645	0
+	+	58	0
+	+	82	28
+	+	149	39
+	+	152	50
+	+	166	45
+	+	82	23
+	+	210	60
+
+> ~/pintos/src/userprog/syscall.c
+	"	276	0
+	^	276	1
+	.	276	0
+	+	281	0
+	+	291	38
+	+	1	0
+	+	1	0
+	+	1	15
+	+	1	14
+	+	1	18
+	+	1	16
+	+	1	17
+	+	1	12
+	+	1	15
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	277	0
+	+	276	0
+
+> ~/pintos/src/userprog/build/process.c
+	"	1	0
+
+> ~/pintos/src/userprog/exception.
+	"	1	0
+
+> ~/pintos/src/threads/thread.h
+	"	9	10
+	^	110	2
+	.	110	1
+	+	10	27
+	+	7	26
+	+	95	0
+	+	95	0
+	+	104	0
+	+	110	0
+	+	109	211
+	+	105	0
+	+	109	97
+	+	109	0
+	+	109	33
+	+	109	33
+	+	110	0
+	+	107	40
+	+	106	33
+	+	105	34
+	+	107	16
+	+	109	33
+	+	108	18
+	+	107	29
+	+	105	0
+	+	107	0
+	+	109	30
+	+	107	15
+	+	104	1
+	+	110	1
+
+> ~/pintos/src/threads/thread.c
+	"	74	29
+	^	476	20
+	.	476	20
+	+	101	0
+	+	478	28
+	+	480	0
+	+	480	14
+	+	480	28
+	+	480	19
+	+	480	0
+	+	477	0
+	+	480	0
+	+	477	0
+	+	479	0
+	+	477	10
+	+	214	15
+	+	214	80
+	+	214	82
+	+	214	80
+	+	214	80
+	+	476	18
+	+	475	0
+	+	214	32
+	+	215	21
+	+	216	45
+	+	214	32
+	+	214	68
+	+	214	0
+	+	214	0
+	+	208	0
+	+	216	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	208	30
+	+	209	19
+	+	476	20
+
+> ~/pintos/src/userprog/build/thread.c
+	"	1	0
 
 > ~/pintos/src/threads/init.c
+	"	134	21
+	^	134	22
+	.	134	21
+	+	134	21
+
+> ~/pintos/src/process.c
+	"	1	0
+
+> ~/pintos/src/userprog/syscall.h
+	"	1	0
+
+> ~/pintos/src/lib/syscall-nr.h
+	"	1	0
+	^	22	12
+	.	22	12
+	+	24	0
+	+	23	32
+	+	22	0
+	+	23	11
+	+	22	12
+
+> ~/pintos/src/lib/user/syscall.c
+	"	80	0
+	^	91	25
+	.	91	25
+	+	66	66
+	+	81	12
+	+	66	0
+	+	64	0
+	+	66	0
+	+	65	11
+	+	82	4
+	+	92	1
+	+	82	0
+	+	88	0
+	+	85	26
+	+	91	25
+
+> ~/pintos/src/lib/user/syscall.h
+	"	24	52
+	^	24	53
+	.	24	52
+	+	23	2
+	+	24	52
+
+> ~/pintos/src/userprog/process.
+	"	1	0
+
+> ~/pintos/src/utils/pintos
+	"	1	0
+
+> ~/.bashrc
+	"	119	34
+
+> ~/pintos/src/tests/userprog/args_many.ck
+	"	1	0
+
+> ~/pintos/src/tests/userprog/bad-jump2.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/bad-jump2.ck
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args_single.ck
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args_none.ck
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args_none.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args_multiple.ck
+	"	1	0
+
+> /usr/share/vim/vim74/doc/help.txt
 	"	1	0
 
 > ~/pintos/src/threads/init.h
@@ -903,96 +1386,3 @@ $
 
 > ~/os_hw1_tester/list_unique.in
 	"	1	0
-
-> ~/os_hw1_tester/list_unique.out
-	"	1	0
-
-> ~/os_hw1_tester/list_remove.in
-	"	1	0
-
-> ~/os_hw1_tester/list_remove.out
-	"	1	0
-
-> ~/os_hw1_tester/list_pushes.out
-	"	1	0
-
-> ~/a/lib_hw1/testlib
-	"	1	0
-
-> ~/a/lib_hw1/hash.h
-	"	50	34
-
-> ~/a/lib_hw1/Makefile
-	"	9	4
-	^	9	5
-	.	9	5
-	+	9	5
-
-> ~/a/lib_hw1/makefile
-	"	1	0
-
-> ~/a/lib_hw1/hash.c
-	"	28	11
-
-> ~/a/lib_hw1/main.c
-	"	1	0
-
-> ~/os_hw1_tester/list_insert.out
-	"	1	0
-
-> /usr/share/vim/vim74/doc/help.txt
-	"	20	8
-
-> ~/a/lib_hw1/bitmap.c
-	"	343	0
-	^	374	47
-	.	374	46
-	+	170	0
-	+	374	46
-
-> ~/tester/bitmap.c
-	"	374	46
-	^	374	47
-	.	374	46
-	+	170	18
-	+	183	19
-	+	198	19
-	+	342	0
-	+	342	0
-	+	374	46
-
-> ~/os_hw1_tester/Makefile
-	"	2	9
-
-> ~/lib_hw1/stdio.c
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_scna.in
-	"	1	0
-
-> ~/lib_hw1/debug.h
-	"	1	0
-
-> ~/lib_hw1/round.h
-	"	1	0
-
-> ~/lib_hw1/limits.h
-	"	1	0
-
-> ~/.vimrc
-	"	10	5
-	^	10	6
-	.	10	0
-	+	4	0
-	+	1	0
-	+	2	14
-	+	10	0
-
-> ~/.viminfo
-	"	34	0
-
-> ~/pintos/src/lib/kernel/list.c
-	"	524	0
-
-> ~/pintos/src/lib/kernel/list.h
-	"	180	0
