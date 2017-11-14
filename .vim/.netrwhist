@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/sogang/under/cse20141494'
 let g:netrw_dirhist_2='/sogang/under/cse20141494/pintos'
 let g:netrw_dirhist_3='/sogang/under/cse20141494/pintos/src/threads'
+let g:netrw_dirhist_4='/sogang/under/cse20141494/pintos/src/userprog/build/tests'
