@@ -8,117 +8,117 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/user
+~MSle0~/sys_create
 
 # Last Substitute Search Pattern:
-~MSle0&b.next
+~MSle0&exit_process
 
 # Last Substitute String:
-$
+$sys_exit
 
 # Command Line History (newest to oldest):
-:q
 :wq
-:w
-:210
-:82
-:149
-:84
-:58
+:145
+:141
+:263
 :q!
-:181
-:172
-:166
-:180
-:56
-:Wq
-:W
 :Q
-:416
-:426
-:427
-:420
-:419
-:319
-:406
-:395
-:393
+:q
 :273
-:299
-:326
-:252
-:50
-:231
-:219
-:94
-:150
-:116
-:476
-:209
-:477
-:208
-:61
-:112
-:118
-:130
-:60
 :269
-:119
-:57
-:5
-:42
+:259
+:106
+:%s/exit_process/sys_exit
+:%s/close_file/sys_close
+:w
+:227
+:%s/check_ptr/is_valid
+:%s/place_holder_ptr/temp_string
+:%s/symbol/token
+:441
+:357
+:237
+:553
+:349
+:147
+:82
+:48
+:251
+:152
+:153
+:88
+:;wq
+:Wq
+:162
+:157
+:293
+:252
+:232
+:wa
+:%s/child_proc/child_list
+:431
+:126
+:c
+:75
+:249
+:105
+:94
+:%s/process_exit/process_shutdown
+:418
+:406
+:403
 
 # Search String History (newest to oldest):
-? @$
-?/user
-?/!user
-?/thread
-?/sys_
-?/sys_ex
-?/sys
-?/sys_exit
-?/sys_e
-?/start
-?/load
-?/loasd
-?/print(
-?/print
-?/free
-?/user==
-?/palloc
-?/thread ex
-?/syscall_init
-?/dy
-?/load_af
-?/execute_th
-?/exe
-?/execute
-?/219
+?/sys_create
+?/wake
+? exit_process
+? close_file
+?/list_search
+?/get_user
+?/running
+? check_ptr
+? place_holder_ptr
+? symbol
+?/Adds a
+?/install
+?/install_page
 ?/shutdown
-?/shutdown_power
-?/runn
-?/if(t
-?/is_thread
-?/thread_create
-?/if(t->tid
-?/thread_cre
-?/list_push
-?/init_
-?/init_th
 ?/init
-?/process_execute
-?/process_excute
-?/process
-?/61
-?/sema_up
-?/while
-?/setup_st
-?/align
-?/argv
-?/kernel
-?/open fail
+?/-100
+?/close
+?/close_
+?/close_file
+?/close_files
+?/files
+?/lock
+?/exit
+?/load
+?/load af
+?/printf
+?/in
+?/load (
+?/load(
+?/execute
+?/execute_th
+?/fclos
+?/printf("1
+?/process_exit
+?/process_ex
+?/file_close
 ?/open
-?/export
+?/fopen
+?/file
+?/process
+?/thread_init
+?/threat_init
+?/filesys
+?/filess
+?/shut
+?/exit_e
+?/proc
+?/child
+?/wait
+?/child_lock
 
 # Expression History (newest to oldest):
 
@@ -127,343 +127,471 @@ $
 # Input Line History (newest to oldest):
 
 # Registers:
-""0	LINE	0
-	  if(!write){thread_exit();return;}
-"1	LINE	0
-						        tid = TID_ERROR;
+"0	LINE	0
+	      is_valid(user_ptr + 1);
+""1	LINE	0
+		lock_release(&file_lock);
 "2	LINE	0
-					    else if (tid == TID_LOAD_FAIL)
-"3	CHAR	0
-	#include "userprog/syscall.h"
-	#include <stdio.h>
-	#include <syscall-nr.h>
-	#include "threads/interrupt.h"
-	#include "threads/thread.h"
-	
-	#include <stdint.h>
-	#include "lib/user/syscall.h"
-	#include "threads/vaddr.h"
-	
-	#define STACK_BLOCK   4
-	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
-	
-	inline static bool chk_user_ptr (const void *);
-	inline static bool chk_valid_ptr (const void *);
-	static void syscall_handler (struct intr_frame *);
-	
-	/* syscalls... */
-	static int    syscall_fibonacci (int n);
-	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
-	static void   syscall_halt (void);
-	static void   syscall_exit (int status);
-	static pid_t  syscall_exec (const char *file);
-	static int    syscall_wait (pid_t pid);
-	static int    syscall_read (int fd, void *buffer, unsigned size);
-	static int    syscall_write (int fd, void *buffer, unsigned size);
-	
-		void
-	syscall_init (void) 
-	{
-		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+	  c->tid = tid;
+"3@	LINE	0
+	  c->exit_status = t->exit_status;
+"4	LINE	0
+	  c->used = false;
+"5	LINE	0
+	   static void
+"6	LINE	0
 	}
-	
-		inline static bool 
-	chk_user_ptr (const void *ptr)
-	{
-		return is_user_vaddr(ptr);
-	}
-	
-		inline static bool
-	chk_valid_ptr (const void *ptr)
-	{
-		return chk_user_ptr (ptr);
-	}
-	
-		inline static bool
-	chk_valid_sp (const void *sp_top, int arg_cnt)
-	{
-		ASSERT (arg_cnt > 0);
-		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
-"4	CHAR	0
-	#include "userprog/syscall.h"
-	#include <stdio.h>
-	#include <syscall-nr.h>
-	#include "threads/interrupt.h"
-	#include "threads/thread.h"
-	
-	#include <stdint.h>
-	#include "lib/user/syscall.h"
-	#include "threads/vaddr.h"
-	
-	#define STACK_BLOCK   4
-	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
-	
-	inline static bool chk_user_ptr (const void *);
-	inline static bool chk_valid_ptr (const void *);
-	static void syscall_handler (struct intr_frame *);
-	
-	/* syscalls... */
-	static int    syscall_fibonacci (int n);
-	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
-	static void   syscall_halt (void);
-	static void   syscall_exit (int status);
-	static pid_t  syscall_exec (const char *file);
-	static int    syscall_wait (pid_t pid);
-	static int    syscall_read (int fd, void *buffer, unsigned size);
-	static int    syscall_write (int fd, void *buffer, unsigned size);
-	
-		void
-	syscall_init (void) 
-	{
-		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
-	}
-	
-		inline static bool 
-	chk_user_ptr (const void *ptr)
-	{
-		return is_user_vaddr(ptr);
-	}
-	
-		inline static bool
-	chk_valid_ptr (const void *ptr)
-	{
-		return chk_user_ptr (ptr);
-	}
-	
-		inline static bool
-	chk_valid_sp (const void *sp_top, int arg_cnt)
-	{
-		ASSERT (arg_cnt > 0);
-		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
-"5	CHAR	0
-	#include "userprog/syscall.h"
-	#include <stdio.h>
-	#include <syscall-nr.h>
-	#include "threads/interrupt.h"
-	#include "threads/thread.h"
-	
-	#include <stdint.h>
-	#include "lib/user/syscall.h"
-	#include "threads/vaddr.h"
-	
-	#define STACK_BLOCK   4
-	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
-	
-	inline static bool chk_user_ptr (const void *);
-	inline static bool chk_valid_ptr (const void *);
-	static void syscall_handler (struct intr_frame *);
-	
-	/* syscalls... */
-	static int    syscall_fibonacci (int n);
-	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
-	static void   syscall_halt (void);
-	static void   syscall_exit (int status);
-	static pid_t  syscall_exec (const char *file);
-	static int    syscall_wait (pid_t pid);
-	static int    syscall_read (int fd, void *buffer, unsigned size);
-	static int    syscall_write (int fd, void *buffer, unsigned size);
-	
-		void
-	syscall_init (void) 
-	{
-		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
-	}
-	
-		inline static bool 
-	chk_user_ptr (const void *ptr)
-	{
-		return is_user_vaddr(ptr);
-	}
-	
-		inline static bool
-	chk_valid_ptr (const void *ptr)
-	{
-		return chk_user_ptr (ptr);
-	}
-	
-		inline static bool
-	chk_valid_sp (const void *sp_top, int arg_cnt)
-	{
-		ASSERT (arg_cnt > 0);
-		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
-"6	CHAR	0
-	#include "userprog/syscall.h"
-	#include <stdio.h>
-	#include <syscall-nr.h>
-	#include "threads/interrupt.h"
-	#include "threads/thread.h"
-	
-	#include <stdint.h>
-	#include "lib/user/syscall.h"
-	#include "threads/vaddr.h"
-	
-	#define STACK_BLOCK   4
-	#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
-	
-	inline static bool chk_user_ptr (const void *);
-	inline static bool chk_valid_ptr (const void *);
-	static void syscall_handler (struct intr_frame *);
-	
-	/* syscalls... */
-	static int    syscall_fibonacci (int n);
-	static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
-	static void   syscall_halt (void);
-	static void   syscall_exit (int status);
-	static pid_t  syscall_exec (const char *file);
-	static int    syscall_wait (pid_t pid);
-	static int    syscall_read (int fd, void *buffer, unsigned size);
-	static int    syscall_write (int fd, void *buffer, unsigned size);
-	
-		void
-	syscall_init (void) 
-	{
-		intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
-	}
-	
-		inline static bool 
-	chk_user_ptr (const void *ptr)
-	{
-		return is_user_vaddr(ptr);
-	}
-	
-		inline static bool
-	chk_valid_ptr (const void *ptr)
-	{
-		return chk_user_ptr (ptr);
-	}
-	
-		inline static bool
-	chk_valid_sp (const void *sp_top, int arg_cnt)
-	{
-		ASSERT (arg_cnt > 0);
-		return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
 "7	LINE	0
-		   */
+	
 "8	LINE	0
-	        * free resources that current process owned.
+	  return fthread->waketick < sthread->waketick;
 "9	LINE	0
-	  /*
+	
 "-	CHAR	0
-	/
+	e
 
 # File marks:
-'0  8  0  ~/pintos/src/threads
-'1  147  10  ~/pintos/src/userprog/exception.c
-'2  210  60  ~/pintos/src/userprog/process.c
-'3  166  45  ~/pintos/src/userprog/process.c
-'4  82  28  ~/pintos/src/userprog/process.c
-'5  84  33  ~/pintos/src/userprog/process.c
-'6  645  0  ~/pintos/src/userprog/process.c
-'7  1  0  ~/pintos/src/userprog/process.c
-'8  1  1  ~/pintos/src/userprog/process.c
-'9  1  0  ~/pintos/src/userprog/process.c
+'0  144  0  ~/pintos/src/userprog/process.c
+'1  23  28  ~/pintos/src/userprog/process.c
+'2  143  0  ~/pintos/src/userprog/process.c
+'3  273  23  ~/pintos/src/userprog/syscall.c
+'4  4  6  ~/pintos/src/userprog/syscall.c
+'5  200  2  ~/pintos/src/threads/thread.c
+'6  262  26  ~/pintos/src/userprog/syscall.c
+'7  269  23  ~/pintos/src/userprog/syscall.c
+'8  258  26  ~/pintos/src/userprog/syscall.c
+'9  1  0  ~/pintos/src/userprog/syscall.c
 
 # Jumplist (newest first):
--'  8  0  ~/pintos/src/threads
--'  147  10  ~/pintos/src/userprog/exception.c
--'  98  0  ~/pintos/src/userprog/exception.c
--'  1  0  ~/pintos/src/userprog/exception.c
--'  210  60  ~/pintos/src/userprog/process.c
+-'  144  0  ~/pintos/src/userprog/process.c
+-'  145  2  ~/pintos/src/userprog/process.c
 -'  1  0  ~/pintos/src/userprog/process.c
--'  166  45  ~/pintos/src/userprog/process.c
--'  82  28  ~/pintos/src/userprog/process.c
--'  84  33  ~/pintos/src/userprog/process.c
--'  645  0  ~/pintos/src/userprog/process.c
--'  276  0  ~/pintos/src/userprog/syscall.c
+-'  23  28  ~/pintos/src/userprog/process.c
+-'  143  0  ~/pintos/src/userprog/process.c
+-'  142  2  ~/pintos/src/userprog/process.c
+-'  273  23  ~/pintos/src/userprog/syscall.c
 -'  1  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/build/process.c
--'  1  0  ~/pintos/src/userprog/exception.
--'  9  10  ~/pintos/src/threads/thread.h
--'  1  0  ~/pintos/src/threads/thread.h
--'  74  29  ~/pintos/src/threads/thread.c
--'  563  0  ~/pintos/src/threads/thread.c
+-'  4  6  ~/pintos/src/userprog/syscall.c
+-'  200  2  ~/pintos/src/threads/thread.c
 -'  1  0  ~/pintos/src/threads/thread.c
--'  704  0  ~/pintos/src/userprog/process.c
--'  1  0  ~/pintos/src/userprog/build/thread.c
--'  99  0  ~/pintos/src/threads/thread.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  706  0  ~/pintos/src/userprog/process.c
--'  705  7  ~/pintos/src/userprog/process.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  647  0  ~/pintos/src/userprog/process.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/build/process.c
--'  1  0  ~/pintos/src/userprog/exception.
--'  9  10  ~/pintos/src/threads/thread.h
--'  1  0  ~/pintos/src/threads/thread.h
--'  74  29  ~/pintos/src/threads/thread.c
--'  563  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/userprog/build/thread.c
--'  99  0  ~/pintos/src/threads/thread.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  708  0  ~/pintos/src/userprog/process.c
--'  707  7  ~/pintos/src/userprog/process.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/build/process.c
--'  1  0  ~/pintos/src/userprog/exception.
--'  9  10  ~/pintos/src/threads/thread.h
--'  1  0  ~/pintos/src/threads/thread.h
--'  74  29  ~/pintos/src/threads/thread.c
--'  563  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/userprog/build/thread.c
--'  99  0  ~/pintos/src/threads/thread.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/build/process.c
--'  1  0  ~/pintos/src/userprog/exception.
--'  9  10  ~/pintos/src/threads/thread.h
--'  1  0  ~/pintos/src/threads/thread.h
--'  74  29  ~/pintos/src/threads/thread.c
--'  563  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/userprog/build/thread.c
--'  99  0  ~/pintos/src/threads/thread.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  276  0  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  210  60  ~/pintos/src/userprog/process.c
--'  147  10  ~/pintos/src/userprog/exception.c
--'  98  0  ~/pintos/src/userprog/exception.c
+-'  262  26  ~/pintos/src/userprog/syscall.c
+-'  269  23  ~/pintos/src/userprog/syscall.c
+-'  258  26  ~/pintos/src/userprog/syscall.c
+-'  63  19  ~/pintos/src/userprog/syscall.c
+-'  1  0  ~/pintos/src/userprog/build/syscall.c
+-'  107  8  ~/pintos/src/userprog/process.c
+-'  104  2  ~/pintos/src/userprog/process.c
+-'  6  0  ~/pintos/src/userprog/process.h
+-'  1  0  ~/pintos/src/userprog/process.h
+-'  105  0  ~/pintos/src/userprog/process.c
+-'  623  0  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/userprog/thread.c
+-'  93  6  ~/pintos/src/userprog/exception.c
+-'  1  0  ~/pintos/src/userprog/exception.c
+-'  138  2  ~/pintos/src/userprog/process.c
+-'  292  0  ~/pintos/src/userprog/syscall.c
+-'  18  1  ~/pintos/src/userprog/syscall.c
+-'  19  0  ~/pintos/src/userprog/syscall.c
+-'  200  6  ~/pintos/src/userprog/syscall.c
+-'  218  0  ~/pintos/src/userprog/syscall.c
+-'  49  6  ~/pintos/src/userprog/syscall.c
+-'  62  19  ~/pintos/src/userprog/syscall.c
+-'  45  6  ~/pintos/src/userprog/syscall.c
+-'  48  6  ~/pintos/src/userprog/syscall.c
+-'  50  0  ~/pintos/src/userprog/syscall.c
+-'  55  6  ~/pintos/src/userprog/syscall.c
+-'  56  0  ~/pintos/src/userprog/syscall.c
+-'  47  11  ~/pintos/src/userprog/syscall.c
+-'  71  27  ~/pintos/src/userprog/syscall.c
+-'  74  0  ~/pintos/src/userprog/syscall.c
+-'  41  0  ~/pintos/src/userprog/syscall.c
+-'  61  6  ~/pintos/src/userprog/syscall.c
+-'  85  5  ~/pintos/src/userprog/syscall.c
+-'  117  6  ~/pintos/src/userprog/syscall.c
+-'  146  6  ~/pintos/src/userprog/syscall.c
+-'  213  0  ~/pintos/src/userprog/syscall.c
+-'  180  25  ~/pintos/src/userprog/syscall.c
+-'  172  16  ~/pintos/src/userprog/syscall.c
+-'  156  41  ~/pintos/src/userprog/syscall.c
+-'  131  41  ~/pintos/src/userprog/syscall.c
+-'  111  28  ~/pintos/src/userprog/syscall.c
+-'  12  21  ~/pintos/src/userprog/syscall.c
+-'  279  21  ~/pintos/src/userprog/syscall.c
+-'  271  0  ~/pintos/src/userprog/syscall.c
+-'  316  11  ~/pintos/src/userprog/syscall.c
+-'  13  11  ~/pintos/src/userprog/syscall.c
+-'  9  0  ~/pintos/src/userprog/syscall.c
+-'  2  1  ~/pintos/src/userprog/syscall.c
+-'  209  6  ~/pintos/src/userprog/syscall.c
+-'  11  5  ~/pintos/src/userprog/syscall.c
+-'  210  2  ~/pintos/src/userprog/syscall.c
+-'  584  0  ~/pintos/src/userprog/process.c
+-'  410  7  ~/pintos/src/userprog/process.c
+-'  394  1  ~/pintos/src/userprog/process.c
+-'  1  0  ~/pintos/src/userprog/processc
+-'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.errors
+-'  38  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.output
+-'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.output
+-'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.result
+-'  35  0  ~/pintos/src/userprog/process.c
+-'  291  12  ~/pintos/src/userprog/process.c
+-'  236  0  ~/pintos/src/userprog/process.c
+-'  241  0  ~/pintos/src/userprog/process.c
+-'  566  0  ~/pintos/src/userprog/process.c
+-'  567  0  ~/pintos/src/userprog/process.c
+-'  432  0  ~/pintos/src/userprog/process.c
+-'  357  12  ~/pintos/src/userprog/process.c
+-'  258  17  ~/pintos/src/userprog/process.c
+-'  558  2  ~/pintos/src/userprog/process.c
+-'  557  1  ~/pintos/src/userprog/process.c
+-'  387  0  ~/pintos/src/userprog/process.c
+-'  24  0  ~/pintos/src/userprog/process.c
+-'  533  11  ~/pintos/src/userprog/process.c
+-'  441  12  ~/pintos/src/userprog/process.c
+-'  400  1  ~/pintos/src/userprog/process.c
+-'  559  12  ~/pintos/src/userprog/process.c
+-'  242  34  ~/pintos/src/userprog/process.c
+-'  405  9  ~/pintos/src/userprog/process.c
+-'  548  3  ~/pintos/src/userprog/process.c
+-'  146  2  ~/pintos/src/userprog/process.c
+-'  152  52  ~/pintos/src/userprog/process.c
+-'  64  1  ~/pintos/src/userprog/process.c
+-'  139  1  ~/pintos/src/userprog/process.c
+-'  1  0  ~/pintos/src/process.c
+-'  493  19  ~/pintos/src/threads/thread.c
+-'  407  12  ~/pintos/src/threads/thread.c
 
 # History of marks within files (newest to oldest):
 
+> ~/pintos/src/userprog/process.c
+	"	144	0
+	^	144	1
+	.	144	0
+	+	130	0
+	+	129	0
+	+	106	0
+	+	125	40
+	+	126	19
+	+	122	32
+	+	106	55
+	+	132	28
+	+	132	28
+	+	132	0
+	+	132	0
+	+	156	0
+	+	154	1
+	+	134	0
+	+	142	0
+	+	140	0
+	+	139	1
+	+	140	2
+	+	137	23
+	+	61	0
+	+	140	24
+	+	143	0
+	+	143	0
+	+	143	25
+	+	144	0
+	+	143	1
+	+	152	52
+	+	146	0
+	+	137	18
+	+	138	6
+	+	439	0
+	+	439	0
+	+	438	0
+	+	242	0
+	+	567	0
+	+	549	12
+	+	565	1
+	+	550	0
+	+	242	35
+	+	357	26
+	+	242	35
+	+	559	0
+	+	557	72
+	+	441	0
+	+	242	0
+	+	441	0
+	+	24	0
+	+	242	0
+	+	235	0
+	+	237	0
+	+	24	0
+	+	242	0
+	+	237	0
+	+	237	0
+	+	242	0
+	+	567	0
+	+	567	0
+	+	566	0
+	+	566	0
+	+	432	1
+	+	410	0
+	+	237	35
+	+	367	1
+	+	395	9
+	+	394	0
+	+	394	0
+	+	395	0
+	+	394	0
+	+	394	0
+	+	394	0
+	+	394	1
+	+	394	0
+	+	394	0
+	+	367	0
+	+	410	19
+	+	410	0
+	+	410	13
+	+	416	6
+	+	415	12
+	+	417	22
+	+	416	12
+	+	421	19
+	+	420	0
+	+	424	0
+	+	425	0
+	+	421	0
+	+	138	0
+	+	143	0
+	+	105	0
+	+	104	2
+	+	141	2
+	+	142	0
+	+	141	2
+	+	142	4
+	+	143	0
+	+	24	0
+	+	23	28
+	+	145	0
+	+	143	0
+	+	144	0
+	i	231	16
+
+> ~/pintos/src/userprog/syscall.c
+	"	273	23
+	^	273	24
+	.	273	24
+	+	311	49
+	+	310	35
+	+	296	126
+	+	8	0
+	+	303	19
+	+	308	30
+	+	210	11
+	+	210	7
+	+	262	0
+	+	38	25
+	+	210	16
+	+	51	3
+	+	203	1
+	+	210	1
+	+	203	0
+	+	205	0
+	+	210	0
+	+	205	0
+	+	210	0
+	+	210	0
+	+	210	3
+	+	210	1
+	+	210	0
+	+	209	3
+	+	210	0
+	+	11	15
+	+	196	4
+	+	210	0
+	+	208	11
+	+	201	11
+	+	198	0
+	+	11	0
+	+	13	0
+	+	316	0
+	+	196	14
+	+	313	0
+	+	300	0
+	+	296	0
+	+	283	0
+	+	285	0
+	+	39	0
+	+	43	0
+	+	51	0
+	+	51	0
+	+	55	0
+	+	57	0
+	+	50	0
+	+	51	0
+	+	63	0
+	+	72	0
+	+	86	0
+	+	118	0
+	+	62	27
+	+	72	0
+	+	43	0
+	+	44	0
+	+	50	0
+	+	62	0
+	+	39	0
+	+	193	0
+	+	39	0
+	+	43	0
+	+	48	0
+	+	55	0
+	+	61	0
+	+	64	0
+	+	66	0
+	+	70	0
+	+	73	0
+	+	75	0
+	+	80	0
+	+	84	0
+	+	87	0
+	+	91	0
+	+	93	0
+	+	108	0
+	+	116	0
+	+	119	0
+	+	131	0
+	+	133	0
+	+	137	0
+	+	145	0
+	+	150	0
+	+	157	0
+	+	161	0
+	+	169	0
+	+	177	0
+	+	185	0
+	+	188	0
+	+	18	0
+	+	44	0
+	+	63	18
+	+	258	26
+	+	269	24
+	+	262	26
+	+	273	24
+	+	262	26
+	+	273	24
+	+	262	26
+	+	273	24
+
+> ~/pintos/src/threads/thread.c
+	"	200	2
+	.	193	0
+	+	534	15
+	+	533	7
+	+	195	0
+	+	234	0
+	+	195	2
+	+	234	2
+	+	210	0
+	+	209	0
+	+	206	3
+	+	207	3
+	+	209	3
+	+	188	0
+	+	205	0
+	+	206	0
+	+	207	0
+	+	209	0
+	+	206	32
+	+	232	0
+	+	324	52
+	+	327	12
+	+	325	0
+	+	326	0
+	+	327	0
+	+	325	0
+	+	513	0
+	+	504	0
+	+	501	0
+	+	504	2
+	+	507	0
+	+	505	15
+	+	512	47
+	+	507	0
+	+	510	0
+	+	512	0
+	+	510	0
+	+	512	0
+	+	508	2
+	+	507	30
+	+	40	29
+	+	54	0
+	+	53	20
+	+	53	0
+	+	503	0
+	+	6	17
+	+	53	0
+	+	52	0
+	+	204	38
+	+	209	46
+	+	204	27
+	+	324	48
+	+	325	86
+	+	195	17
+	+	204	2
+	+	320	24
+	+	325	6
+	+	507	26
+	+	509	9
+	+	52	0
+	+	40	5
+	+	503	0
+	+	208	18
+	+	270	2
+	+	271	21
+	+	346	17
+	+	511	16
+	+	208	20
+	+	271	33
+	+	271	38
+	+	85	0
+	+	248	48
+	+	233	0
+	+	271	36
+	+	272	0
+	+	208	3
+	+	234	4
+	+	248	3
+	+	271	3
+	+	511	3
+	+	346	2
+	+	38	0
+	+	49	0
+	+	43	21
+	+	48	21
+	+	112	17
+	+	497	32
+	+	507	0
+	+	502	0
+	+	248	2
+	+	271	2
+	+	248	2
+	+	271	3
+	+	493	19
+	+	624	0
+	+	191	45
+	+	195	0
+	+	192	0
+	+	195	0
+	+	194	0
+	+	195	0
+	+	193	0
+	a	204	2
+
+> ~/pintos/src/userprog/build/syscall.c
+	"	1	0
+
+> ~/pintos/src/userprog/process.h
+	"	6	0
+
+> ~/pintos/src/userprog/thread.c
+	"	1	0
+
 > ~/pintos/src/userprog/exception.c
-	"	147	10
+	"	93	6
 	^	152	17
-	.	152	16
+	.	93	0
 	+	150	30
 	+	150	36
 	+	91	0
@@ -473,237 +601,211 @@ $
 	+	150	5
 	+	151	10
 	+	152	16
+	+	93	0
 
-> ~/pintos/src/userprog/process.c
-	"	210	60
-	^	210	61
-	.	210	60
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	20
-	+	1	0
-	+	1	1
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	1
-	+	1	2
-	+	1	3
-	+	1	10
-	+	1	0
-	+	1	40
-	+	1	55
-	+	1	0
-	+	1	40
-	+	1	30
-	+	1	57
-	+	1	1
-	+	1	40
-	+	1	0
-	+	1	55
-	+	1	19
-	+	1	1
-	+	1	41
-	+	1	1
-	+	1	40
-	+	1	54
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	2
-	+	1	1
-	+	1	44
-	+	1	15
-	+	1	21
-	+	1	0
-	+	1	41
-	+	1	0
-	+	1	0
-	+	1	41
-	+	1	13
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	26
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	43
-	+	1	36
-	+	1	0
-	+	1	20
-	+	1	53
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	11
-	+	1	26
-	+	1	32
-	+	1	33
-	+	1	53
-	+	1	10
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	36
-	+	1	0
-	+	1	1
-	+	1	1
-	+	1	1
-	+	1	21
-	+	1	57
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	62
-	+	1	0
-	+	646	0
-	+	645	0
-	+	58	0
-	+	82	28
-	+	149	39
-	+	152	50
-	+	166	45
-	+	82	23
-	+	210	60
-
-> ~/pintos/src/userprog/syscall.c
-	"	276	0
-	^	276	1
-	.	276	0
-	+	281	0
-	+	291	38
-	+	1	0
-	+	1	0
-	+	1	15
-	+	1	14
-	+	1	18
-	+	1	16
-	+	1	17
-	+	1	12
-	+	1	15
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	277	0
-	+	276	0
-
-> ~/pintos/src/userprog/build/process.c
+> ~/pintos/src/userprog/processc
 	"	1	0
 
-> ~/pintos/src/userprog/exception.
+> ~/pintos/src/userprog/build/tests/userprog/rox-multichild.errors
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/rox-multichild.output
+	"	38	0
+
+> ~/pintos/src/userprog/build/tests/userprog/rox-multichild.result
+	"	1	0
+
+> ~/pintos/src/process.c
+	"	1	0
+
+> ~/pintos/src/threads/syscall.c
 	"	1	0
 
 > ~/pintos/src/threads/thread.h
-	"	9	10
-	^	110	2
-	.	110	1
+	"	112	13
+	^	158	0
+	.	159	0
 	+	10	27
 	+	7	26
 	+	95	0
 	+	95	0
 	+	104	0
-	+	110	0
-	+	109	211
+	+	112	0
+	+	107	211
 	+	105	0
-	+	109	97
-	+	109	0
-	+	109	33
-	+	109	33
-	+	110	0
-	+	107	40
-	+	106	33
-	+	105	34
-	+	107	16
-	+	109	33
-	+	108	18
-	+	107	29
-	+	105	0
+	+	107	97
 	+	107	0
-	+	109	30
-	+	107	15
+	+	107	33
+	+	107	33
+	+	112	0
+	+	105	40
+	+	105	33
+	+	105	34
+	+	105	16
+	+	107	33
+	+	106	18
+	+	105	29
+	+	105	0
+	+	105	0
+	+	107	30
+	+	105	15
 	+	104	1
-	+	110	1
+	+	112	1
+	+	97	14
+	+	100	18
+	+	101	13
+	+	91	15
+	+	105	0
+	+	107	32
+	+	111	4
+	+	105	15
+	+	111	12
+	+	118	16
+	+	123	0
+	+	122	0
+	+	123	0
+	+	122	0
+	+	121	0
+	+	120	0
+	+	119	0
+	+	121	0
+	+	122	0
+	+	121	19
+	+	113	26
+	+	114	26
+	+	29	0
+	+	158	0
+	+	159	0
 
-> ~/pintos/src/threads/thread.c
-	"	74	29
-	^	476	20
-	.	476	20
-	+	101	0
-	+	478	28
-	+	480	0
-	+	480	14
-	+	480	28
-	+	480	19
-	+	480	0
-	+	477	0
-	+	480	0
-	+	477	0
-	+	479	0
-	+	477	10
-	+	214	15
-	+	214	80
-	+	214	82
-	+	214	80
-	+	214	80
-	+	476	18
-	+	475	0
-	+	214	32
-	+	215	21
-	+	216	45
-	+	214	32
-	+	214	68
-	+	214	0
-	+	214	0
-	+	208	0
-	+	216	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	208	30
-	+	209	19
-	+	476	20
+> ~/pintos/src/filesys/file.c
+	"	11	71
 
-> ~/pintos/src/userprog/build/thread.c
+> ~/pintos/src/filesys/file.cc
 	"	1	0
 
-> ~/pintos/src/threads/init.c
-	"	134	21
-	^	134	22
-	.	134	21
-	+	134	21
-
-> ~/pintos/src/process.c
+> ~/pintos/src/userprog/syscall.
 	"	1	0
 
 > ~/pintos/src/userprog/syscall.h
+	"	2	0
+
+> ~/pintos/src/userprog/process.
 	"	1	0
 
-> ~/pintos/src/lib/syscall-nr.h
+> ~/pintos/src/userprog/build/process.c
 	"	1	0
-	^	22	12
-	.	22	12
-	+	24	0
-	+	23	32
-	+	22	0
-	+	23	11
-	+	22	12
+
+> ~/pintos/src/userprog/syscallc
+	"	1	0
+
+> ~/pintos/src/userprog/syscall
+	"	1	0
+
+> ~/pintos/src/userprog/process.o
+	"	1	0
+
+> /usr/share/vim/vim74/doc/help.txt
+	"	1	0
+
+> ../threads/thread.c
+	"	1	0
+
+> ~/pintos-0746/src/userprog/process.c
+	"	54	2
+
+> ~/pintos/src/utils/Pintos.pm
+	"	362	24
+	.	362	24
+	+	1	0
+	+	1	0
+	+	1	0
+	+	362	24
+
+> ~/pintos/src/utils/pintos
+	"	257	24
+	^	257	24
+	.	257	24
+	+	105	15
+	+	1	0
+	+	1	0
+	+	1	0
+	+	624	0
+	+	131	9
+	+	132	35
+	+	131	44
+	+	568	48
+	+	912	5
+	+	928	0
+	+	929	0
+	+	930	0
+	+	931	0
+	+	932	0
+	+	933	0
+	+	934	0
+	+	936	0
+	+	935	0
+	+	257	24
+
+> ~/pintos/src/filesys/directory.h
+	"	1	0
+
+> ~/pintos/src/filesys/directory.c
+	"	1	0
+
+> ~/pintos/src/filesys/filesys.c
+	"	14	0
+
+> ~/pintos/src/utils/pintos.pm
+	"	1	0
+
+> ~/pintos/src/utils/pintos-mkdisk
+	"	1	0
+
+> ~/pintos/src/userprog/Make.vars
+	"	7	0
+	.	1	0
+	+	1	0
+
+> ~/pintos/src/utils/pintos-gdb
+	"	4	19
+	^	4	27
+	.	4	26
+	+	4	26
+
+> ~/pintos/src/misc/gdb-macros
+	"	1	0
+	^	136	34
+	.	136	33
+	+	136	33
+
+> ~/pintos/src/threads/...
+	"	1	0
+
+> ~/pintos/src/threads/init.c
+	"	340	17
+	^	418	0
+	.	41	8
+	+	135	21
+	+	65	0
+	+	41	8
+
+> ~/pintos/src/threads/init..c
+	"	1	0
+
+> ~/Pintos-Project2-master/src/utils/pintos
+	"	577	5
+	^	57	6
+	.	130	8
+	+	129	7
+	+	130	7
+	+	129	43
+	+	130	8
+
+> ~/pintos/src/tests/threads/tests.c
+	"	51	12
 
 > ~/pintos/src/lib/user/syscall.c
-	"	80	0
+	"	86	0
 	^	91	25
 	.	91	25
 	+	66	66
@@ -720,17 +822,90 @@ $
 	+	91	25
 
 > ~/pintos/src/lib/user/syscall.h
-	"	24	52
+	"	19	0
 	^	24	53
 	.	24	52
 	+	23	2
 	+	24	52
 
-> ~/pintos/src/userprog/process.
+> ~/pintos/src/devices/shutdown.c
+	"	102	24
+	^	102	25
+	.	102	24
+	+	102	24
+
+> ~/pintos/src/vm/Make.vars
 	"	1	0
 
-> ~/pintos/src/utils/pintos
+> ~/pintos/src/filesys/Make.vars
+	"	2	0
+
+> ~/pintos/src/threads/Make.vars
+	"	7	17
+	^	7	18
+	.	7	17
+	+	7	17
+
+> ../../threads/init.c
 	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/create.output
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/create.result
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/close-noral.result
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/close-noral.output
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/args.d
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/lib.o
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/args-many.result
+	"	1	0
+
+> ~/pintos/src/userprog/build/tests/userprog/args-many.output
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args-single.ck
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args-single.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args-single
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args-many.c
+	"	1	0
+
+> ~/pintos/src/tests/userprog/args-many.ck
+	"	1	0
+
+> ~/pintos/src/userprog/exception.
+	"	1	0
+
+> ~/pintos/src/userprog/build/thread.c
+	"	1	0
+
+> ~/pintos/src/lib/syscall-nr.h
+	"	1	0
+	^	22	12
+	.	22	12
+	+	24	0
+	+	23	32
+	+	22	0
+	+	23	11
+	+	22	12
 
 > ~/.bashrc
 	"	119	34
@@ -753,13 +928,7 @@ $
 > ~/pintos/src/tests/userprog/args_none.c
 	"	1	0
 
-> ~/pintos/src/tests/userprog/args.c
-	"	1	0
-
 > ~/pintos/src/tests/userprog/args_multiple.ck
-	"	1	0
-
-> /usr/share/vim/vim74/doc/help.txt
 	"	1	0
 
 > ~/pintos/src/threads/init.h
@@ -1120,269 +1289,4 @@ $
 	"	1	0
 
 > ~/os_hw1_tester/hash_apply.in
-	"	1	0
-
-> ~/os_hw1_tester/hash_apply
-	"	1	0
-
-> ~/a/lib_hw1/testlib.h
-	"	33	0
-	^	29	0
-	.	29	0
-	+	44	0
-	+	29	0
-
-> ~/lib_hw1/list.h
-	"	172	1
-	^	171	29
-	.	143	0
-	+	168	24
-	+	169	56
-	+	170	36
-	+	172	30
-	+	171	45
-	+	143	0
-
-> ~/lib_hw1/hash.h
-	"	86	12
-	^	90	19
-	.	90	0
-	+	104	7
-	+	102	22
-	+	104	27
-	+	104	26
-	+	90	0
-
-> ~/lib_hw1/list.c
-	"	74	18
-	^	597	9
-	.	597	8
-	+	544	0
-	+	545	0
-	+	555	0
-	+	558	0
-	+	564	0
-	+	543	0
-	+	552	0
-	+	556	0
-	+	560	0
-	+	543	0
-	+	547	0
-	+	548	0
-	+	556	0
-	+	561	0
-	+	542	0
-	+	551	0
-	+	555	0
-	+	557	0
-	+	568	1
-	+	545	11
-	+	548	11
-	+	558	11
-	+	561	11
-	+	568	11
-	+	570	5
-	+	575	11
-	+	577	5
-	+	569	0
-	+	585	0
-	+	582	3
-	+	585	1
-	+	607	0
-	+	594	37
-	+	605	0
-	+	604	0
-	+	594	64
-	+	596	17
-	+	599	25
-	+	603	0
-	+	3	17
-	+	599	21
-	+	599	0
-	+	595	14
-	+	599	38
-	+	595	29
-	+	595	0
-	+	599	28
-	+	599	51
-	+	595	35
-	+	599	105
-	+	599	104
-	+	599	85
-	+	603	0
-	+	602	0
-	+	4	15
-	+	598	15
-	+	602	15
-	+	601	22
-	+	602	16
-	+	595	43
-	+	587	46
-	+	593	0
-	+	589	33
-	+	588	11
-	+	589	35
-	+	591	9
-	+	589	21
-	+	591	28
-	+	589	35
-	+	588	20
-	+	589	37
-	+	589	23
-	+	591	31
-	+	592	16
-	+	602	34
-	+	542	5
-	+	544	20
-	+	547	20
-	+	576	15
-	+	578	15
-	+	596	8
-	+	557	20
-	+	560	20
-	+	538	17
-	+	587	45
-	+	589	33
-	+	588	7
-	+	591	5
-	+	589	0
-	+	589	0
-	+	590	0
-	+	596	46
-	+	595	32
-	+	596	36
-	+	600	26
-	+	603	32
-	+	598	15
-	+	599	5
-	+	600	5
-	+	597	8
-
-> ~/os_hw1_tester/bitmap_test.out
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_test.output
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_test.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_flip.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_flip.output
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_flip.out
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_any.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_any.out
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_any.output
-	"	1	0
-
-> ~/os_hw1_tester/hash_delete.output
-	"	1	0
-
-> ~/os_hw1_tester/hash_apply.output
-	"	1	0
-
-> ~/os_hw1_tester/hash_replace.output
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_set_all.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_set.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_mark.in
-	"	1	0
-
-> ~/os_hw1_tester/list_splice.out
-	"	1	0
-
-> ~/os_hw1_tester/list_splice.output
-	"	1	0
-
-> ~/os_hw1_tester/list_splice.in
-	"	1	0
-
-> ~/os_hw1_tester/list_splice.vi
-	"	1	0
-
-> ~/os_hw1_tester/hash_delete.in
-	"	1	0
-
-> ~/os_hw1_tester/hash_find.output
-	"	1	0
-
-> ~/os_hw1_tester/hash_delete.out
-	"	1	0
-
-> ~/os_hw1_tester/hash_apply.out
-	"	1	0
-
-> ~/os_hw1_tester/hash_find.out
-	"	1	0
-
-> ~/os_hw1_tester/hash_apply.
-	"	1	0
-
-> ~/os_hw1_tester/hash_insert.output
-	"	1	2
-
-> ~/os_hw1_tester/hash_find.in
-	"	1	0
-
-> ~/os_hw1_tester/hash_replace.in
-	"	1	0
-
-> ~/os_hw1_tester/hash_replace.out
-	"	1	17
-
-> ~/os_hw1_tester/list_swap.in
-	"	1	0
-
-> ~/os_hw1_tester/list_swap.
-	"	1	0
-
-> ~/os_hw1_tester/list_maxminsizeempty.in
-	"	1	0
-
-> ~/os_hw1_tester/list_maxminsizeempty.result
-	"	1	4
-
-> ~/os_hw1_tester/list_maxminsizeempty.output
-	"	1	0
-
-> ~/os_hw1_tester/list_frontback.out
-	"	1	0
-
-> ~/os_hw1_tester/list_maxminsizeempty.out
-	"	4	0
-
-> ~/os_hw1_tester/list_plain.in
-	"	1	0
-
-> ~/os_hw1_tester/list_insert.result
-	"	1	0
-
-> ~/os_hw1_tester/list_insert.output
-	"	1	0
-
-> ~/os_hw1_tester/list_pushes.in
-	"	1	0
-
-> ~/os_hw1_tester/list_insert.in
-	"	1	0
-	^	2	0
-	.	1	3
-	+	1	3
-
-> ~/os_hw1_tester/list_unique.in
 	"	1	0

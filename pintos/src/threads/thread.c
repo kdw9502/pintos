@@ -26,7 +26,7 @@ static struct list ready_list;
 
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
-static struct list all_list;
+struct list all_list;
 
 /* Idle thread. */
 static struct thread *idle_thread;
@@ -36,6 +36,8 @@ static struct thread *initial_thread;
 
 /* Lock used by allocate_tid(). */
 static struct lock tid_lock;
+
+struct lock file_lock;
 
 /* Stack frame for kernel_thread(). */
 struct kernel_thread_frame 
@@ -93,6 +95,8 @@ thread_init (void)
   list_init (&ready_list);
   list_init (&all_list);
 
+  lock_init(&file_lock);
+
   /* Set up a thread structure for the running thread. */
   initial_thread = running_thread ();
   init_thread (initial_thread, "main", PRI_DEFAULT);
@@ -106,15 +110,16 @@ void
 thread_start (void) 
 {
   /* Create the idle thread. */
-  struct semaphore start_idle;
-  sema_init (&start_idle, 0);
-  thread_create ("idle", PRI_MIN, idle, &start_idle);
+  struct semaphore idle_started;
+  sema_init (&idle_started, 0);
+  thread_create ("idle", PRI_MIN, idle, &idle_started);
 
   /* Start preemptive thread scheduling. */
   intr_enable ();
 
   /* Wait for the idle thread to initialize idle_thread. */
-  sema_down (&start_idle);
+  sema_down (&idle_started);
+
 }
 
 /* Called by the timer interrupt handler at each timer tick.
@@ -183,6 +188,11 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
+  struct child* c = malloc(sizeof(struct child));
+  c->tid = tid;
+  c->exit_status = t->exit_status;
+  c->used = false;
+  list_push_back (&running_thread()->child_list, &c->elem);
 
   /* Prepare thread for first run by initializing its stack.
      Do this atomically so intermediate values for the 'stack' 
@@ -205,14 +215,11 @@ thread_create (const char *name, int priority,
   sf->ebp = 0;
 
   intr_set_level (old_level);
-  if(is_thread(running_thread())){
-	  list_push_back(&thread_current()->child_list,(struct list_elem*)&t->allelem);
-  }
-  else{
 
-  }
   /* Add to run queue. */
   thread_unblock (t);
+
+  return tid;
 }
 
 /* Puts the current thread to sleep.  It will not be scheduled
@@ -300,6 +307,12 @@ thread_exit (void)
   /* Remove thread from all threads list, set our status to dying,
      and schedule another process.  That process will destroy us
      when it calls thread_schedule_tail(). */
+
+    while(!list_empty(&thread_current()->child_list)){
+      struct process_file *f = list_entry (list_pop_front(&thread_current()->child_list), struct child, elem);
+      free(f);
+    }
+
   intr_disable ();
   list_remove (&thread_current()->allelem);
   thread_current ()->status = THREAD_DYING;
@@ -466,18 +479,28 @@ init_thread (struct thread *t, const char *name, int priority)
   ASSERT (PRI_MIN <= priority && priority <= PRI_MAX);
   ASSERT (name != NULL);
 
+
   memset (t, 0, sizeof *t);
-  t->status = THREAD_BLOCKED;
   strlcpy (t->name, name, sizeof t->name);
+  t->status = THREAD_BLOCKED;
+  t->magic = THREAD_MAGIC;
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
-  t->magic = THREAD_MAGIC;
+  
+  
+  list_init (&t->child_list);
+  t->parent = running_thread();
+  
+  list_init (&t->files);
+  t->file_count = 2;
+  t->exit_status = 64;
+  
+  sema_init(&t->child_sema, 0);
+  
+  t->wait = 0;
+  t->self = NULL;
+  
   list_push_back (&all_list, &t->allelem);
-  t->exit_status=-1;
-  t->loaded=t->abort=true;
-  list_init(&t->child_list);
-  sema_init(&t->wait_sema,0);
-  sema_init(&t->exit_sema,0);
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
@@ -576,6 +599,7 @@ schedule (void)
   thread_schedule_tail (prev);
 }
 
+
 /* Returns a tid to use for a new thread. */
 static tid_t
 allocate_tid (void) 
@@ -593,3 +617,4 @@ allocate_tid (void)
 /* Offset of `stack' member within `struct thread'.
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
+
