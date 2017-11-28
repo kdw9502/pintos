@@ -1,36 +1,3 @@
-cd ..
-ls
-cd userprog/
-ls
-make
-make check
-tar xvfz pintos_modified.tar.gz 
-ls
-cd pintos
-ls
-cd src/
-cd threads/
-ls
-vi Make.vars 
-cd ..
-cd filesys/
-vi Make.vars 
-cd ..
-cd userprog/
-ls
-vi Make.vars 
-cd ../vm
-vi Make.vars 
-cd ..
-cd utils/
-ls
-vi pintos
-cd ..
-ls
-cd threads/
-make
-ls
-cd ..
 ls
 cd t
 cd tests/
@@ -1998,3 +1965,36 @@ ls
 cd ..
 tar -czvf os_prj2_2_2_48.tar.gz ./48
 ls
+git add .
+git push
+ls
+cd pintos/
+ls
+cd src/
+git add .
+git status
+ls
+cd ..
+ls
+git add .
+git add.
+ls
+git add *
+git push origin pro2-2
+git checkout -b proj2-2
+git push origin proj2-2
+cd pintos/
+cd src/
+ls
+git status
+git add *]
+git add *
+git add -A
+git diff
+ls
+cd userprog/
+ls
+vi syscall.c
+git commit
+git commit -m "proj2-2"
+git push origin proj2-2
