@@ -3,275 +3,333 @@
 #include <syscall-nr.h>
 #include "threads/interrupt.h"
 #include "threads/thread.h"
-
-#include <stdint.h>
-#include "lib/user/syscall.h"
 #include "threads/vaddr.h"
+#include "list.h"
+#include "process.h"
 
-#define STACK_BLOCK   4
-#define SYS_ARG_PTR(ESP, IDX) ((uintptr_t) (ESP) + (IDX) * STACK_BLOCK)
-
-inline static bool chk_user_ptr (const void *);
-inline static bool chk_valid_ptr (const void *);
 static void syscall_handler (struct intr_frame *);
+void is_valid(void*);
+struct process_file* list_search(struct list* files, int fd);
+extern struct lock file_lock;
 
-/* syscalls... */
-static int    syscall_fibonacci (int n);
-static int    syscall_sum_of_four_integers (int a, int b, int c, int d);
-static void   syscall_halt (void);
-static void   syscall_exit (int status);
-static pid_t  syscall_exec (const char *file);
-static int    syscall_wait (pid_t pid);
-static int    syscall_read (int fd, void *buffer, unsigned size);
-static int    syscall_write (int fd, void *buffer, unsigned size);
+// STRUCT TO HELP WITH PROCESSING THE FILES
+struct process_file {
+  struct file* ptr;
+  int fd;
+  struct list_elem elem;
+};
 
-	void
+void
 syscall_init (void) 
 {
-	intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+  intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
 }
 
-	inline static bool 
-chk_user_ptr (const void *ptr)
+static void
+syscall_handler (struct intr_frame *f UNUSED) 
 {
-	return is_user_vaddr(ptr);
-}
+  uint32_t *call_ptr = f->esp;
+  is_valid(call_ptr);
+  uint32_t system_call = *call_ptr;
 
-	inline static bool
-chk_valid_ptr (const void *ptr)
+  
+
+  switch (system_call)
+  {
+    case SYS_HALT:
+      shutdown_power_off();
+      break;
+
+    case SYS_EXIT:
+      is_valid(call_ptr + 1);
+      sys_exit(*(call_ptr + 1));
+      break;
+
+    case SYS_EXEC:
+      is_valid(call_ptr + 1);
+      is_valid(*(call_ptr + 1));
+      f->eax = sys_exec(*(call_ptr + 1));
+      break;
+
+    case SYS_WAIT:
+      is_valid(call_ptr + 1);
+      f->eax = process_wait(*(call_ptr + 1));
+      break;
+	  
+//	case SYS_FIBO:
+//	case SYS_SUM:
+    
+    case SYS_CREATE:
+      is_valid(call_ptr + 5);
+      is_valid(*(call_ptr + 4));
+
+      lock_acquire(&file_lock);
+      f->eax = filesys_create(*(call_ptr + 4), *(call_ptr + 5));
+      lock_release(&file_lock);
+      break;
+
+    case SYS_REMOVE:
+      is_valid(call_ptr + 1);
+      is_valid(*(call_ptr + 1));
+
+      lock_acquire(&file_lock);
+
+      if(filesys_remove(*(call_ptr + 1)) == NULL)
+        f->eax = false;
+      else
+        f->eax = true;
+
+      lock_release(&file_lock);
+      break;
+
+    case SYS_OPEN:
+      is_valid(call_ptr + 1);
+      is_valid(*(call_ptr + 1));
+	  sys_open(call_ptr,f);
+      
+      break;
+    case SYS_CLOSE:
+      is_valid(call_ptr + 1);
+
+      lock_acquire(&file_lock);
+      sys_close(&thread_current()->files,*(call_ptr + 1));
+      lock_release(&file_lock);
+      break;
+
+    case SYS_FILESIZE:
+      is_valid(call_ptr + 1);
+
+      lock_acquire(&file_lock);
+      f->eax = file_length (list_search(&thread_current()->files, *(call_ptr + 1))->ptr);
+      lock_release(&file_lock);
+      break;
+
+    case SYS_READ:
+      is_valid(call_ptr + 7);
+      is_valid(*(call_ptr + 6));
+	  sys_read(call_ptr,f);
+
+      break;
+
+    case SYS_WRITE:
+      is_valid(call_ptr + 7);
+      is_valid(*(call_ptr + 6));
+		sys_write(call_ptr,f);
+
+      break;
+
+    case SYS_SEEK:
+      is_valid(call_ptr + 5);
+
+      lock_acquire(&file_lock);
+      file_seek(list_search(&thread_current()->files, *(call_ptr + 4))->ptr, *(call_ptr + 5));
+      lock_release(&file_lock);
+      break;
+
+    case SYS_TELL:
+      is_valid(call_ptr + 1);
+
+      lock_acquire(&file_lock);
+      f->eax = file_tell(list_search(&thread_current()->files, *(call_ptr + 1))->ptr);
+      lock_release(&file_lock);
+      break;
+	
+
+
+  }
+}
+void sys_write(uint32_t *call_ptr,struct intr_frame *f){
+	      if(*(call_ptr + 5) == 1)
+      {
+        putbuf(*(call_ptr + 6), *(call_ptr + 7));
+        f->eax = *(call_ptr + 7);
+      }
+      else
+      {
+        
+        struct process_file* frame_ptr = list_search(&thread_current()->files, *(call_ptr + 5));
+        if(frame_ptr == NULL)
+          f->eax = -1;
+        else
+        {
+          lock_acquire(&file_lock);
+          f->eax = file_write (frame_ptr->ptr, *(call_ptr + 6), *(call_ptr + 7));
+          lock_release(&file_lock);
+        }
+      }
+}
+void sys_read(uint32_t *call_ptr,struct intr_frame *f){
+	  if(*(call_ptr + 5) == 0)
+      {
+        int i;
+        uint8_t* buffer = *(call_ptr + 6);
+
+        for(i = 0 ; i < *(call_ptr + 7); i++)
+          buffer[i] = input_getc();
+
+        f->eax = *(call_ptr + 7);
+      }
+      else
+      {
+        struct process_file* frame_ptr = list_search(&thread_current()->files, *(call_ptr + 5));
+
+        if(frame_ptr != NULL){
+			lock_acquire(&file_lock);
+			f->eax = file_read (frame_ptr->ptr, *(call_ptr + 6), *(call_ptr + 7));
+			lock_release(&file_lock);
+        
+		}
+        else
+        {
+			f->eax = -1;
+		}
+      }
+}
+void sys_open(uint32_t *call_ptr,struct intr_frame *f){
+	  lock_acquire(&file_lock);
+
+      struct file *frame_ptr = filesys_open (*(call_ptr + 1));
+
+      lock_release(&file_lock);
+      if(frame_ptr == NULL)
+        f->eax = -1;
+      else
+      {
+        struct process_file *call_ptr_file = malloc(sizeof(*call_ptr_file));
+
+        
+        call_ptr_file->fd = thread_current()->file_count;
+		call_ptr_file->ptr = frame_ptr;
+		thread_current()->file_count++;
+        list_push_back (&thread_current()->files, &call_ptr_file->elem);
+        f->eax = call_ptr_file->fd;
+      }
+	
+}
+void is_valid(void *vaddr)
 {
-	return chk_user_ptr (ptr);
+  if (!is_user_vaddr(vaddr))
+  {
+    sys_exit(-1);
+    return ;
+  }
+
+  void *ptr = pagedir_get_page(thread_current()->pagedir, vaddr);
+  if (!ptr)
+  {
+    sys_exit(-1);
+    return ;
+  }
 }
 
-	inline static bool
-chk_valid_sp (const void *sp_top, int arg_cnt)
+
+int sys_exec(char *file_name)
 {
-	ASSERT (arg_cnt > 0);
-	return chk_user_ptr ( SYS_ARG_PTR (sp_top, arg_cnt-1) );
+  lock_acquire(&file_lock);
+   char *temp;
+  char *file_name_copy = malloc (strlen(file_name) + 1);
+  strlcpy(file_name_copy, file_name, strlen(file_name) + 1);
+	  
+ 
+
+  file_name_copy = strtok_r(file_name_copy, " ", &temp);
+
+  struct file *f = filesys_open (file_name_copy);
+
+  
+  if(f != NULL)
+  {
+	  
+	file_close(f);
+    lock_release(&file_lock);
+    return process_execute(file_name);
+
+  }
+  else
+  {
+    lock_release(&file_lock);
+    return -1;
+
+  }
 }
 
-	inline static void
-handle_invalid_sp (void)
+void sys_close(struct list* files, int fd)
 {
-	thread_exit ();
+  struct list_elem *elem;
+
+  struct process_file *fi;
+  
+ elem = list_begin (files);
+  while( elem != list_end (files)) 
+  {
+
+    fi = list_entry (elem, struct process_file, elem);
+    if(fi->fd == fd)
+    {
+      file_close(fi->ptr);
+      list_remove(elem);
+      return;
+    }
+  elem = list_next (elem);
+  }
 }
 
-	static int
-get_user (const uint8_t *uaddr)
+void sys_closes(struct list* files)
 {
-	int result;
-	asm ("movl $1f, %0; movzbl %1, %0; 1:"
-			: "=&a" (result) : "m" (*uaddr));
-	return result;
+  struct list_elem *element;
+
+
+  while(!list_empty(files))
+  {
+
+    element = list_pop_front(files);
+
+    struct process_file *f = list_entry (element, struct process_file, elem);
+    file_close(f->ptr);
+    list_remove(element);
+    free(f);
+  }     
 }
 
-/* Writes BYTE to user address UDST.
- * UDST must be below PHYS_BASE.
- * Returns true if successful, false if a segfault occurred. */
-	static bool
-put_user (uint8_t *udst, uint8_t byte)
+struct process_file* list_search(struct list* files, int fd)
 {
-	int error_code;
-	asm ("movl $1f, %0; movb %b2, %1; 1:"
-			: "=&a" (error_code), "=m" (*udst) : "q" (byte));
-	return error_code != -1;
+  struct list_elem *e;
+
+  e = list_begin (files); 
+  while(e != list_end (files))
+  {
+    struct process_file *f = list_entry (e, struct process_file, elem);
+    if(f->fd == fd)
+      return f;
+    e = list_next (e);
+  }
+  return NULL;
 }
 
-	static void
-syscall_handler (struct intr_frame *f /*UNUSED*/) 
+void sys_exit(int status)
 {
-	uint32_t syscall_num;
-	void *arg_top;
-
-	// will be coded - taeguk
-	//hex_dump((uintptr_t) f->esp, (const char *) f->esp, (uintptr_t) PHYS_BASE - (uintptr_t) f->esp, true);
-
-	syscall_num = * (uint32_t *) f->esp;
-
-	switch(syscall_num)
-	{
-		case SYS_FIBO:           // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 1);
-			if (!chk_valid_sp (arg_top, 1)) handle_invalid_sp ();
-			f->eax = 
-				syscall_fibonacci ( * (int *) SYS_ARG_PTR (arg_top, 0) );
-			break;
-
-		case SYS_SUM: // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 6);
-			if (!chk_valid_sp (arg_top, 4)) handle_invalid_sp ();
-			f->eax = 
-				syscall_sum_of_four_integers ( * (int *) SYS_ARG_PTR (arg_top, 0)  ,
-						* (int *) SYS_ARG_PTR (arg_top, 1) ,
-						* (int *) SYS_ARG_PTR (arg_top, 2) ,
-						* (int *) SYS_ARG_PTR (arg_top, 3) );
-			break;
-
-		case SYS_HALT:  // project 2-1
-			syscall_halt ();
-			break;
-
-		case SYS_EXIT:  // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 1);
-			if (!chk_valid_sp (arg_top, 1)) handle_invalid_sp ();
-			syscall_exit ( * (int *) SYS_ARG_PTR (arg_top, 0) );
-			break;
-
-		case SYS_EXEC:  // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 1);
-			if (!chk_valid_sp (arg_top, 1)) handle_invalid_sp ();
-			f->eax = (uint32_t)
-				syscall_exec ( * (char **) SYS_ARG_PTR (arg_top, 0) );
-			break;
-
-		case SYS_WAIT:  // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 1);
-			if (!chk_valid_sp (arg_top, 1)) handle_invalid_sp ();
-			f->eax = 
-				syscall_wait ( * (pid_t *) SYS_ARG_PTR (arg_top, 0) );
-			break;
-
-		case SYS_READ:  // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 5);
-			if (!chk_valid_sp (arg_top, 3)) handle_invalid_sp ();
-			f->eax = 
-				syscall_read ( * (int *) SYS_ARG_PTR (arg_top, 0) ,
-						* (void **) SYS_ARG_PTR (arg_top, 1) ,
-						* (unsigned *) SYS_ARG_PTR (arg_top, 2) );
-			break;
-
-		case SYS_WRITE: // p 2-1
-			arg_top = (void *) ((uintptr_t) f->esp + STACK_BLOCK * 5);
-			if (!chk_valid_sp (arg_top, 3)) handle_invalid_sp ();
-			f->eax = 
-				syscall_write ( * (int *) SYS_ARG_PTR (arg_top, 0) ,
-						* (void **) SYS_ARG_PTR (arg_top, 1) ,
-						* (unsigned *) SYS_ARG_PTR (arg_top, 2) );
-			break;
+  struct list_elem *e;
+  struct thread* cur=thread_current();
+  e= list_begin (&cur->parent->child_list); 
+  while(e!= list_end (&cur->parent->child_list))
+  {
+    struct child *f = list_entry (e, struct child, elem);
+  
+    if(f->tid == cur->tid)
+    {
+	  f->exit_status = status;
+      f->used = true;
+      
+    }
+	e= list_next (e);
+  }
 
 
-		case SYS_CREATE:
-			break;
-		case SYS_REMOVE:
-			break;
-		case SYS_OPEN:
-			break;
-		case SYS_FILESIZE:
-			break;
-		case SYS_SEEK:
-			break;
-		case SYS_TELL:
-			break;
-		case SYS_CLOSE:
-			break;
-		default:
-			break;
-	}
+  cur->exit_status = status;
 
-	// call of handler of system call
+  if(cur->parent->wait == cur->tid)
+    sema_up(&cur->parent->child_sema);
 
-	// save system call's result.
-	// store return value to eax.
-
-	//thread_exit ();
+  thread_exit();
 }
 
-// must implement role to check wheter address which is system call's parameter is placed at below PHYS_BASE.
-// I think making a function to check that.
-// And every system call use this function to check if address is user area.
-// Invalid pointer to user area is process in page_fault() in exception.c
-// -taeguk
-
-	static int 
-syscall_fibonacci (int n)
-{
-	int a, b, c, i;
-	a = 0; b = c = 1;
-
-	if(n == 1||n==0) return 1;
-
-	for(i = 1; i < n; ++i)
-	{
-		c = a + b;
-		a = b;
-		b = c;
-	}
-
-	return c;  
-}
-
-	static int
-syscall_sum_of_four_integers (int a, int b, int c, int d)
-{
-	return a+b+c+d; 
-}
-
-	static void 
-syscall_halt (void)
-{
-	shutdown_power_off();
-}
-
-	static void
-syscall_exit (int status)
-{
-	struct thread *cur = thread_current ();
-	cur->abort = false;
-	cur->exit_status = status;
-	printf("sys_exit\n");
-	thread_exit();
-}
-
-	static pid_t
-syscall_exec (const char *file)
-{
-	if (! chk_valid_ptr (file))
-		return -1;
-
-	// the method to check loading is success must be added.
-	return process_execute(file);  // you must modify this! This is only for compile test.
-}
-
-	static int
-syscall_wait (pid_t pid)
-{
-	return process_wait(pid);  // you must modify this! This is only for compile test.
-}
-
-	static int
-syscall_read (int fd, void *buffer, unsigned size)
-{
-	// must be modified...
-	int i;
-
-	if (! chk_valid_ptr (buffer))
-		return -1;
-
-	if(fd == 0 && buffer != NULL)
-	{
-		for(i = 0; i < size; ++i)
-			*(char*)(buffer + i) = input_getc();
-		return i;
-	}
-
-	return -1;  // you must modify this! This is only for compile test.
-}
-
-	static int
-syscall_write (int fd, void *buffer, unsigned size)
-{
-	//printf("[Debug] syscall_write() start\n");
-	//printf("[Debug] fd = %d, buffer = 0x%08p, size = %u\n", fd, buffer, size);
-	if (! chk_valid_ptr (buffer))
-		return -1;
-
-	if(fd == 1 && buffer != NULL)
-	{
-		//printf("[Debug] syscall_write() haaam.\n");
-		putbuf(buffer, size);
-		return size;
-	}
-	//printf("[Debug] syscall_write() end (must be not called.)\n");
-
-	return 0;  // you must modify this! This is only for compile test.
-}
