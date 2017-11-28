@@ -5,8 +5,7 @@
 #include <list.h>
 #include <stdint.h>
 #include <kernel/list.h>
-#include <threads/synch.h>
-
+#include "threads/synch.h"
 /* States in a thread's life cycle. */
 enum thread_status
   {
