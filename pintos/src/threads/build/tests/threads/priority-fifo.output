@@ -1,11 +1,11 @@
-qemu -hda /tmp/pQSfMUmJa2.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/_kzhIR_aeB.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
-Loading........
+Loading.........
 Kernel command line: -q run priority-fifo
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  419,020,800 loops/s.
+Calibrating timer...  314,163,200 loops/s.
 Boot complete.
 Executing 'priority-fifo':
 (priority-fifo) begin
@@ -13,8 +13,16 @@ Executing 'priority-fifo':
 (priority-fifo) If the order varies then there is a bug.
 (priority-fifo) end
 Execution of 'priority-fifo' complete.
-Timer: 42 ticks
-Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Timer: 43 ticks
+Thread: 0 idle ticks, 43 kernel ticks, 0 user ticks
 Console: 517 characters output
+Keyboard: 0 keys presKernel PANIC at ../../threads/synch.c:195 in lock_acquire(): assertion `lock != NULL' failed.
+Call stack: 0xc0028470 0xc0022c73 0xc002b966 0xc00211db.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 44 ticks
+Thread: 0 idle ticks, 44 kernel ticks, 0 user ticks
+Console: 942 characters output
 Keyboard: 0 keys pressed
 Powering off...

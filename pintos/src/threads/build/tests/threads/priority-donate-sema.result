@@ -1,11 +1,23 @@
 FAIL
-Kernel panic in run: PANIC at ../../lib/kernel/list.c:251 in list_remove(): assertion `is_interior (elem)' failed.
-Call stack: 0xc0028360 0xc00283e5 0xc0028fc9 0xc0022729 0xc002295a 0xc002b464 0xc00210df
-Translation of call stack:
-0xc0028360: debug_panic (.../../lib/kernel/debug.c:38)
-0xc00283e5: list_remove (.../../lib/kernel/list.c:252)
-0xc0028fc9: list_pop_front (.../../lib/kernel/list.c:265)
-0xc0022729: sema_up (...../../threads/synch.c:117)
-0xc002295a: lock_release (...../../threads/synch.c:236)
-0xc002b464: l_thread_func (...priority-donate-sema.c:59)
-0xc00210df: kernel_thread (..../../threads/thread.c:449)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-sema) begin
+  (priority-donate-sema) Thread L acquired lock.
+  (priority-donate-sema) Thread L downed semaphore.
+  (priority-donate-sema) Thread H acquired lock.
+  (priority-donate-sema) Thread H finished.
+  (priority-donate-sema) Thread M finished.
+  (priority-donate-sema) Thread L finished.
+  (priority-donate-sema) Main thread finished.
+  (priority-donate-sema) end
+Differences in `diff -u' format:
+  (priority-donate-sema) begin
+- (priority-donate-sema) Thread L acquired lock.
+- (priority-donate-sema) Thread L downed semaphore.
+- (priority-donate-sema) Thread H acquired lock.
+- (priority-donate-sema) Thread H finished.
+- (priority-donate-sema) Thread M finished.
+- (priority-donate-sema) Thread L finished.
+  (priority-donate-sema) Main thread finished.
+  (priority-donate-sema) end

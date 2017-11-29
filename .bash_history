@@ -1,219 +1,6 @@
 cd ..
 ls
 cd userprog/
-ls
-make
-make check
-tar xvfz pintos_modified.tar.gz 
-ls
-cd pintos
-ls
-cd src/
-cd threads/
-ls
-vi Make.vars 
-cd ..
-cd filesys/
-vi Make.vars 
-cd ..
-cd userprog/
-ls
-vi Make.vars 
-cd ../vm
-vi Make.vars 
-cd ..
-cd utils/
-ls
-vi pintos
-cd ..
-ls
-cd threads/
-make
-ls
-cd ..
-ls
-cd t
-cd tests/
-make
-cd ..
-cd userprog/
-ls
-make
-ls
-cd ..
-ls
-cd filesys/
-make
-cd ..
-ls
-cd userprog/ls
-ls
-cd threads/
-ls
-cd ..
-cd devices/
-vi shutdown.c
-pintos -v -- -q run alarm-multiple
-cd ..
-ls
-cd threads/
-pintos –v -- -q run alarm-multiple
-make
-pintos –v -- -q run alarm-multiple
-ls
-cd ..
-ls
-cd userprog/
-pintos -–filesys-size=2 –p ../../examples/echo –a echo -- -f –q run 'echo x'
-pintos-mkdisk filesys.dsk --filesys-size=2
-pintos -f -q
-make
-pintos -f -q
-pintos -p ../../examples/echo -a echo -- -q
-ls
-cd ..
-ls
-cd examples/
-make
-cd ..
-ls
-cd userprog/
-ls
-
-pintos -p ../examples/echo -a echo -- -q
-pintos -q run 'echo x'
-make
-cd ..
-ls
-cd lib/
-ls
-cd user/
-ls
-vi syscall.h
-vi syscall.c
-cd ..
-ls
-cd userprog/
-make
-make check
-cd build/
-make check
-cd ..
-ls
-cd userprog/
-ls
-vi process.c
-vi syscall.c
-vi process.c
-ls
-make
-cd build/
-make
-ls
-make grade
-cd ..
-ls
-cd ..
-ls
-cd  threads/
-make
-cd ..
-ls
-cd userprog/
-make
-make grade
-make check
-ls
-cd ..
-ls
-cd lib/
-ls
-cd user/
-ls
-vi syscall.c
-cd ..
-ls
-cd ..
-ls
-cd threads/
-ls
-cd ..
-ls
-cd tests/
-ls
-cd threads/
-ls
-vi tests.c
-cd ..
-ls
-cd ..
-ls
-cd threads/
-ls
-vi thread.c
-cd ..
-cd threads/
-make
-cd ..
-ls
-cd userprog/
-make
-vi process.c
-cd ..
-ls
-cd threads/
-ls
-vi thread.c
-vi thread.h
-make
-vi thread.c
-make
-vi thread.c
-make
-cd ..
-ls
-cd userprog/
-make
-make check
-cd ..
-cd pintos
-ls
-cd src/
-ls
-cd threads/
-make
-cd ..
-ls
-cd userprog/
-make
-make check
-vi syscall.c
-make
-vi syscall.c
-make
-make check
-cd ..
-ls
-cd Pintos-Project2-master/
-ls
-cd src/
-ls
-cd utils/
-vi pintos
-cd ..
-ls
-cd userprog/
-make check
-make grade
-make
-make check
-cd ..
-ls
-cd threads/
-make
-cd ..
-ls
-cd userprog/
 make check
 cd ..
 ls
@@ -1998,3 +1785,216 @@ ls
 cd ..
 tar -czvf os_prj2_2_2_48.tar.gz ./48
 ls
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+vi thread.c
+cd ..
+ls
+cd devices/
+ls
+vi timer.c
+cd ..
+cd .
+cd ..
+ls
+git add .
+git 
+git add.
+git add .
+git commit -m "proj3"
+git config --global --edit
+git commit -m "proj3"
+git push
+git status
+git checkout master
+git push
+git config --global push.default matching
+git config --global push.default simple
+git push
+git add .
+git commit -m "proj3"
+git config --global user.name "kdw9502"
+git commit --amend --reset-author
+git push
+git pull
+git push
+git config --global user.email kdw9502@gmail.com
+git congif
+git congig
+git config
+git config --list
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd ..
+ls cd..
+ls
+cd ..
+vi .gitconfig
+git config --global push.default matching
+vi .gitconfig
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+make
+make check
+ls
+vi thread.h
+vi init.c
+vi thread.c
+cd ..
+ls
+cd src/
+ls
+cd devices/
+ls
+vi timer.
+vi timer.c
+cd ..
+git add .
+git commit -m "macro and aging setting"
+git puch
+git push
+ls
+cd pintos/
+ls
+cd src/
+git config --global push.default simple
+cd threads/
+cd ..
+ls
+cd ..
+ls
+cd src/
+ls
+cd devices/
+ls
+vi timer.c
+cd ..
+cd threads/
+ls
+vi thread.c
+vi thread.h
+vi thread.c
+vi thread.h
+vi thread.c
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+vi thread.c
+vi thread.h
+vi thread.c
+vi thread.h
+vi thread.c
+ls
+ls =a
+ls -a
+rm .thread.c.swp 
+ls
+vi thread.c
+cd ..
+cd .
+ls
+cd threads/
+ls
+cd ..
+cd devices/
+vi timer.c
+cd ..
+cd threads/
+ls
+vi thread.c
+vi thread.h
+vi thread.c
+cd ..
+ls
+cd ..
+cd src/
+cd devices/
+ls
+vi timer.c
+make
+cd ..
+ls
+cd threads/
+make
+vi init.c
+vi init.h
+vi thread.c
+make
+vi init.c
+vi thread.h
+amke
+make
+vi thread.h
+make
+vi init.c
+make
+vi thread.c
+cd ..
+cd devices/
+vi timer.c
+cd ..
+cd threads/
+vi thread.c
+make
+vi thread.c
+make
+vi thread.c
+make
+vi thread.c
+make
+vi thread.c
+make
+vi thread.c
+make
+make check
+vi thread.c
+vi thread.h
+vi thread.c
+make
+vi thread.c
+make
+vi thread.c
+make
+make check
+vi init.c
+vi thread.c
+make
+make check
+vi thread.h
+make
+make check
+vi init.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+vi thread.c
+ls
+cd pintos/
+ls
+cd src/
+ls
+cd threads/
+ls
+vi thread.c
+vi thread.h
+make
+make check

@@ -1,1 +1,11 @@
-PASS
+FAIL
+Kernel panic in run: PANIC at ../../tests/threads/tests.c:93 in fail(): test failed
+Call stack: 0xc00284e0 0xc002a3a0 0xc002a797 0xc002a7db 0xc002a413 0xc00201d5 0xc00207c1
+Translation of call stack:
+0xc00284e0: debug_panic (.../../lib/kernel/debug.c:38)
+0xc002a3a0: run_test (.../tests/threads/tests.c:48)
+0xc002a797: test_sleep (.../threads/alarm-wait.c:126)
+0xc002a7db: test_alarm_multiple (...s/threads/alarm-wait.c:25)
+0xc002a413: run_test (.../tests/threads/tests.c:57)
+0xc00201d5: run_task (.../../../threads/init.c:298)
+0xc00207c1: run_actions (.../../../threads/init.c:347)

@@ -16,7 +16,7 @@
 #if TIMER_FREQ > 1000
 #error TIMER_FREQ <= 1000 recommended
 #endif
-
+extern int wake_tick;
 /* Number of timer ticks since OS booted. */
 static int64_t ticks;
 
@@ -97,6 +97,7 @@ timer_sleep (int64_t ticks)
     thread_yield ();
 #endif
 #ifndef USERPROG
+	thread_sleep(start + ticks);
 #endif
 }
 

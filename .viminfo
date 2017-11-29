@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/start
+~MSle0~/ticks
 
 # Last Substitute Search Pattern:
 ~MSle0&exit_process
@@ -17,16 +17,27 @@
 $sys_exit
 
 # Command Line History (newest to oldest):
-:wq
 :q
-:92
+:100
+:wq
+:359
 :w
+:159
+:646
+:669
+:665
+:660
+:154
+:262
+:75
 :69
+:Wq
+:q!
+:92
 :69\
 :145
 :141
 :263
-:q!
 :Q
 :273
 :269
@@ -51,29 +62,35 @@ $sys_exit
 :153
 :88
 :;wq
-:Wq
 :162
 :157
 :293
 :252
 :232
-:wa
-:%s/child_proc/child_list
-:431
-:126
-:c
-:75
-:249
-:105
-:94
-:%s/process_exit/process_shutdown
 
 # Search String History (newest to oldest):
+?/ticks
+?/run_action
+?/run_test
+?/init
+?/thread_create
+?/thread_yield
+?/thread_unblock
+?/thread_aging
+?/thread_prior
+?/TIEM_S
+?/thread_ml
+?/timer_int
+?/interr
+?/timer int
+?/timer int	
+?/timer_in
+?/timer_sleep
+?/thread_in
+?/sleep
 ?/start
 ?/thread_ticks
-?/ticks
 ?/thread_wake
-?/thread_ml
 ?/-mlf
 ?/sys_create
 ?/wake
@@ -89,7 +106,6 @@ $sys_exit
 ?/install
 ?/install_page
 ?/shutdown
-?/init
 ?/-100
 ?/close
 ?/close_
@@ -103,22 +119,6 @@ $sys_exit
 ?/printf
 ?/in
 ?/load (
-?/load(
-?/execute
-?/execute_th
-?/fclos
-?/printf("1
-?/process_exit
-?/process_ex
-?/file_close
-?/open
-?/fopen
-?/file
-?/process
-?/thread_init
-?/threat_init
-?/filesys
-?/filess
 
 # Expression History (newest to oldest):
 
@@ -128,278 +128,354 @@ $sys_exit
 
 # Registers:
 "0	LINE	0
-	      else if (!strcmp (name, "-mlfqs"))
+	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
 ""1	LINE	0
-		enum intr_level old_level = intr_disable();
-		thread_sleep(start + ticks);
-		thread_block();
-		intr_set_level(old_level);
+	bool cmp_waketick(struct list_elem *first, struct list_elem *second, void *aux);
 "2	LINE	0
-	      else if ()
+	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
 "3@	LINE	0
-	      else if ()
+	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
 "4	LINE	0
-		lock_release(&file_lock);
+	    list_push_back (&ready_list, &cur->elem);
 "5	LINE	0
-	  c->tid = tid;
+	  thread_wake_up();
 "6	LINE	0
-	  c->exit_status = t->exit_status;
+	  if(wake_tick<=ticks)thread_wake_up(ticks);  
 "7	LINE	0
-	  c->used = false;
+	int wake_tick;
 "8	LINE	0
-	   static void
+		wake_tick=9999999999;
 "9	LINE	0
-	}
+		e=list_begin(&sleep_list);
 "-	CHAR	0
 	e
 
 # File marks:
-'0  100  0  ~/pintos/src/devices/timer.c
-'1  1  0  ~/pintos/src/devices/timer.
-'2  156  17  ~/pintos/src/threads/thread.c
-'3  260  15  ~/pintos/src/threads/init.c
-'4  16  3  ~/pintos/src/threads/thread.h
-'5  1  0  ~/.gitconfig
-'6  8  0  ~/.gitconfig
-'7  144  0  ~/pintos/src/userprog/process.c
-'8  23  28  ~/pintos/src/userprog/process.c
-'9  143  0  ~/pintos/src/userprog/process.c
+'0  100  14  ~/pintos/src/devices/timer.c
+'1  134  5  ~/pintos/src/threads/thread.h
+'2  657  5  ~/pintos/src/threads/thread.c
+'3  548  25  ~/pintos/src/threads/thread.c
+'4  1  0  ~/pintos/src/threads/thread.c
+'5  172  0  ~/pintos/src/threads/thread.h
+'6  35  28  ~/pintos/src/threads/thread.c
+'7  253  5  ~/pintos/src/threads/init.c
+'8  359  37  ~/pintos/src/threads/thread.c
+'9  18  73  ~/pintos/src/threads/thread.c
 
 # Jumplist (newest first):
--'  100  0  ~/pintos/src/devices/timer.c
--'  89  3  ~/pintos/src/devices/timer.c
+-'  100  14  ~/pintos/src/devices/timer.c
 -'  1  0  ~/pintos/src/devices/timer.c
--'  1  0  ~/pintos/src/devices/timer.
--'  156  17  ~/pintos/src/threads/thread.c
--'  139  9  ~/pintos/src/threads/thread.c
--'  57  46  ~/pintos/src/threads/thread.c
--'  56  46  ~/pintos/src/threads/thread.c
--'  53  46  ~/pintos/src/threads/thread.c
--'  52  46  ~/pintos/src/threads/thread.c
--'  78  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
--'  260  15  ~/pintos/src/threads/init.c
--'  244  2  ~/pintos/src/threads/init.c
--'  1  0  ~/pintos/src/threads/init.c
--'  16  3  ~/pintos/src/threads/thread.h
+-'  134  5  ~/pintos/src/threads/thread.h
 -'  1  0  ~/pintos/src/threads/thread.h
--'  1  0  ~/.gitconfig
--'  8  0  ~/.gitconfig
--'  144  0  ~/pintos/src/userprog/process.c
--'  145  2  ~/pintos/src/userprog/process.c
--'  1  0  ~/pintos/src/userprog/process.c
--'  23  28  ~/pintos/src/userprog/process.c
--'  143  0  ~/pintos/src/userprog/process.c
--'  142  2  ~/pintos/src/userprog/process.c
--'  273  23  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/syscall.c
--'  4  6  ~/pintos/src/userprog/syscall.c
--'  213  2  ~/pintos/src/threads/thread.c
--'  262  26  ~/pintos/src/userprog/syscall.c
--'  269  23  ~/pintos/src/userprog/syscall.c
--'  258  26  ~/pintos/src/userprog/syscall.c
--'  63  19  ~/pintos/src/userprog/syscall.c
--'  1  0  ~/pintos/src/userprog/build/syscall.c
--'  107  8  ~/pintos/src/userprog/process.c
--'  104  2  ~/pintos/src/userprog/process.c
--'  6  0  ~/pintos/src/userprog/process.h
--'  1  0  ~/pintos/src/userprog/process.h
--'  105  0  ~/pintos/src/userprog/process.c
--'  636  0  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/userprog/thread.c
--'  93  6  ~/pintos/src/userprog/exception.c
--'  1  0  ~/pintos/src/userprog/exception.c
--'  138  2  ~/pintos/src/userprog/process.c
--'  292  0  ~/pintos/src/userprog/syscall.c
--'  18  1  ~/pintos/src/userprog/syscall.c
--'  19  0  ~/pintos/src/userprog/syscall.c
--'  200  6  ~/pintos/src/userprog/syscall.c
--'  218  0  ~/pintos/src/userprog/syscall.c
--'  49  6  ~/pintos/src/userprog/syscall.c
--'  62  19  ~/pintos/src/userprog/syscall.c
--'  45  6  ~/pintos/src/userprog/syscall.c
--'  48  6  ~/pintos/src/userprog/syscall.c
--'  50  0  ~/pintos/src/userprog/syscall.c
--'  55  6  ~/pintos/src/userprog/syscall.c
--'  56  0  ~/pintos/src/userprog/syscall.c
--'  47  11  ~/pintos/src/userprog/syscall.c
--'  71  27  ~/pintos/src/userprog/syscall.c
--'  74  0  ~/pintos/src/userprog/syscall.c
--'  41  0  ~/pintos/src/userprog/syscall.c
--'  61  6  ~/pintos/src/userprog/syscall.c
--'  85  5  ~/pintos/src/userprog/syscall.c
--'  117  6  ~/pintos/src/userprog/syscall.c
--'  146  6  ~/pintos/src/userprog/syscall.c
--'  213  0  ~/pintos/src/userprog/syscall.c
--'  180  25  ~/pintos/src/userprog/syscall.c
--'  172  16  ~/pintos/src/userprog/syscall.c
--'  156  41  ~/pintos/src/userprog/syscall.c
--'  131  41  ~/pintos/src/userprog/syscall.c
--'  111  28  ~/pintos/src/userprog/syscall.c
--'  12  21  ~/pintos/src/userprog/syscall.c
--'  279  21  ~/pintos/src/userprog/syscall.c
--'  271  0  ~/pintos/src/userprog/syscall.c
--'  316  11  ~/pintos/src/userprog/syscall.c
--'  13  11  ~/pintos/src/userprog/syscall.c
--'  9  0  ~/pintos/src/userprog/syscall.c
--'  2  1  ~/pintos/src/userprog/syscall.c
--'  209  6  ~/pintos/src/userprog/syscall.c
--'  11  5  ~/pintos/src/userprog/syscall.c
--'  210  2  ~/pintos/src/userprog/syscall.c
--'  584  0  ~/pintos/src/userprog/process.c
--'  410  7  ~/pintos/src/userprog/process.c
--'  394  1  ~/pintos/src/userprog/process.c
--'  1  0  ~/pintos/src/userprog/processc
--'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.errors
--'  38  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.output
--'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.output
--'  1  0  ~/pintos/src/userprog/build/tests/userprog/rox-multichild.result
--'  35  0  ~/pintos/src/userprog/process.c
--'  291  12  ~/pintos/src/userprog/process.c
--'  236  0  ~/pintos/src/userprog/process.c
--'  241  0  ~/pintos/src/userprog/process.c
--'  566  0  ~/pintos/src/userprog/process.c
--'  567  0  ~/pintos/src/userprog/process.c
--'  432  0  ~/pintos/src/userprog/process.c
--'  357  12  ~/pintos/src/userprog/process.c
--'  258  17  ~/pintos/src/userprog/process.c
--'  558  2  ~/pintos/src/userprog/process.c
--'  156  17  ~/pintos/src/threads/thread.c
+-'  657  5  ~/pintos/src/threads/thread.c
+-'  147  11  ~/pintos/src/threads/thread.c
+-'  144  9  ~/pintos/src/threads/thread.c
+-'  141  9  ~/pintos/src/threads/thread.c
+-'  59  46  ~/pintos/src/threads/thread.c
+-'  58  46  ~/pintos/src/threads/thread.c
+-'  55  46  ~/pintos/src/threads/thread.c
+-'  54  46  ~/pintos/src/threads/thread.c
+-'  53  46  ~/pintos/src/threads/thread.c
+-'  35  28  ~/pintos/src/threads/thread.c
+-'  675  5  ~/pintos/src/threads/thread.c
+-'  668  28  ~/pintos/src/threads/thread.c
+-'  660  30  ~/pintos/src/threads/thread.c
+-'  649  26  ~/pintos/src/threads/thread.c
+-'  608  16  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  548  25  ~/pintos/src/threads/thread.c
+-'  172  0  ~/pintos/src/threads/thread.h
+-'  586  9  ~/pintos/src/threads/thread.c
+-'  167  41  ~/pintos/src/threads/thread.c
+-'  166  65  ~/pintos/src/threads/thread.c
+-'  155  51  ~/pintos/src/threads/thread.c
+-'  150  15  ~/pintos/src/threads/thread.c
+-'  630  11  ~/pintos/src/threads/thread.c
+-'  253  5  ~/pintos/src/threads/init.c
+-'  158  7  ~/pintos/src/threads/init.c
+-'  155  31  ~/pintos/src/threads/init.c
+-'  147  4  ~/pintos/src/threads/init.c
+-'  140  45  ~/pintos/src/threads/init.c
+-'  127  10  ~/pintos/src/threads/init.c
+-'  125  6  ~/pintos/src/threads/init.c
+-'  120  9  ~/pintos/src/threads/init.c
+-'  115  10  ~/pintos/src/threads/init.c
+-'  114  12  ~/pintos/src/threads/init.c
+-'  112  8  ~/pintos/src/threads/init.c
+-'  111  6  ~/pintos/src/threads/init.c
+-'  110  8  ~/pintos/src/threads/init.c
+-'  109  7  ~/pintos/src/threads/init.c
+-'  105  6  ~/pintos/src/threads/init.c
+-'  104  6  ~/pintos/src/threads/init.c
+-'  100  9  ~/pintos/src/threads/init.c
+-'  99  9  ~/pintos/src/threads/init.c
+-'  98  9  ~/pintos/src/threads/init.c
+-'  95  10  ~/pintos/src/threads/init.c
+-'  91  10  ~/pintos/src/threads/init.c
+-'  90  9  ~/pintos/src/threads/init.c
+-'  82  6  ~/pintos/src/threads/init.c
+-'  61  19  ~/pintos/src/threads/init.c
+-'  60  16  ~/pintos/src/threads/init.c
+-'  42  10  ~/pintos/src/threads/init.c
+-'  1  18  ~/pintos/src/threads/init.c
+-'  281  9  ~/pintos/src/threads/init.c
+-'  278  5  ~/pintos/src/threads/init.c
+-'  256  15  ~/pintos/src/threads/init.c
+-'  188  48  ~/pintos/src/threads/init.c
+-'  166  24  ~/pintos/src/threads/init.c
+-'  164  7  ~/pintos/src/threads/init.c
+-'  101  0  ~/pintos/src/threads/init.c
+-'  359  37  ~/pintos/src/threads/thread.c
+-'  18  73  ~/pintos/src/threads/thread.c
+-'  186  0  ~/pintos/src/threads/thread.c
+-'  177  10  ~/pintos/src/threads/thread.c
+-'  176  20  ~/pintos/src/threads/thread.c
+-'  122  2  ~/pintos/src/threads/thread.c
+-'  93  0  ~/pintos/src/threads/thread.c
+-'  362  2  ~/pintos/src/threads/thread.c
+-'  278  5  ~/pintos/src/threads/thread.c
+-'  241  25  ~/pintos/src/threads/thread.c
+-'  235  2  ~/pintos/src/threads/thread.c
+-'  202  0  ~/pintos/src/threads/thread.c
+-'  692  0  ~/pintos/src/threads/thread.c
+-'  97  0  ~/pintos/src/threads/thread.h
+-'  688  45  ~/pintos/src/threads/thread.c
+-'  157  1  ~/pintos/src/threads/thread.c
+-'  158  1  ~/pintos/src/threads/thread.c
+-'  658  7  ~/pintos/src/threads/thread.c
+-'  681  21  ~/pintos/src/threads/thread.c
+-'  677  24  ~/pintos/src/threads/thread.c
+-'  672  48  ~/pintos/src/threads/thread.c
+-'  657  5  ~/pintos/src/threads/thread.c
+-'  147  11  ~/pintos/src/threads/thread.c
+-'  144  9  ~/pintos/src/threads/thread.c
+-'  141  9  ~/pintos/src/threads/thread.c
+-'  59  46  ~/pintos/src/threads/thread.c
+-'  58  46  ~/pintos/src/threads/thread.c
+-'  55  46  ~/pintos/src/threads/thread.c
+-'  54  46  ~/pintos/src/threads/thread.c
+-'  53  46  ~/pintos/src/threads/thread.c
+-'  35  28  ~/pintos/src/threads/thread.c
+-'  675  5  ~/pintos/src/threads/thread.c
+-'  668  28  ~/pintos/src/threads/thread.c
+-'  660  30  ~/pintos/src/threads/thread.c
+-'  649  26  ~/pintos/src/threads/thread.c
+-'  608  16  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
 
 # History of marks within files (newest to oldest):
 
 > ~/pintos/src/devices/timer.c
-	"	100	0
-	.	100	0
+	"	100	14
+	.	180	0
 	+	95	14
 	+	98	6
 	+	99	0
+	+	102	0
+	+	101	10
 	+	101	0
-	+	100	10
-	+	100	0
 	+	99	0
-	+	100	0
-	+	100	0
-	+	100	0
-	+	100	29
-	+	100	16
-	+	100	0
+	+	101	0
+	+	101	0
+	+	101	0
+	+	101	29
+	+	101	16
+	+	101	0
 	+	99	6
+	+	101	0
+	+	99	6
+	+	101	0
 	+	100	0
+	+	101	0
+	+	180	0
+	+	19	10
+	+	180	0
 
-> ~/pintos/src/devices/timer.
-	"	1	0
+> ~/pintos/src/threads/thread.h
+	"	134	5
+	^	134	6
+	.	118	9
+	+	9	27
+	+	7	26
+	+	96	0
+	+	96	0
+	+	105	0
+	+	113	0
+	+	108	211
+	+	106	0
+	+	108	97
+	+	108	0
+	+	108	33
+	+	108	33
+	+	113	0
+	+	106	40
+	+	106	33
+	+	106	34
+	+	106	16
+	+	108	33
+	+	107	18
+	+	106	29
+	+	106	0
+	+	106	0
+	+	108	30
+	+	106	15
+	+	105	1
+	+	113	1
+	+	98	14
+	+	101	18
+	+	102	13
+	+	92	15
+	+	106	0
+	+	108	32
+	+	112	4
+	+	106	15
+	+	112	12
+	+	123	16
+	+	128	0
+	+	127	0
+	+	128	0
+	+	127	0
+	+	126	0
+	+	125	0
+	+	124	0
+	+	126	0
+	+	127	0
+	+	126	19
+	+	114	26
+	+	118	26
+	+	30	0
+	+	163	0
+	+	164	0
+	+	9	0
+	+	8	26
+	+	8	9
+	+	118	19
+	+	115	15
+	+	119	5
+	+	117	10
+	+	24	0
+	+	172	23
+	+	173	11
+	+	172	11
+	+	173	24
+	+	29	0
+	+	13	0
+	+	10	30
+	+	172	24
+	+	173	26
+	+	172	0
+	+	118	9
 
 > ~/pintos/src/threads/thread.c
-	"	156	17
-	^	156	18
-	.	156	17
-	+	222	0
-	+	219	3
-	+	220	3
-	+	222	3
-	+	201	0
-	+	218	0
-	+	219	0
-	+	220	0
-	+	222	0
-	+	219	32
-	+	245	0
-	+	337	52
-	+	340	12
-	+	338	0
-	+	339	0
-	+	340	0
-	+	338	0
-	+	526	0
-	+	517	0
-	+	514	0
-	+	517	2
-	+	520	0
-	+	518	15
-	+	525	47
-	+	520	0
-	+	523	0
-	+	525	0
-	+	523	0
-	+	525	0
-	+	521	2
-	+	520	30
-	+	40	29
-	+	54	0
-	+	53	20
-	+	53	0
-	+	516	0
-	+	6	17
-	+	53	0
-	+	52	0
-	+	217	38
-	+	222	46
-	+	217	27
-	+	337	48
-	+	338	86
-	+	208	17
-	+	217	2
-	+	333	24
-	+	338	6
-	+	520	26
-	+	522	9
-	+	52	0
-	+	40	5
-	+	516	0
-	+	221	18
-	+	283	2
-	+	284	21
-	+	359	17
-	+	524	16
-	+	221	20
-	+	284	33
-	+	284	38
-	+	90	0
-	+	261	48
-	+	246	0
-	+	284	36
-	+	285	0
-	+	221	3
-	+	247	4
-	+	261	3
-	+	284	3
-	+	524	3
-	+	359	2
-	+	38	0
-	+	49	0
-	+	43	21
-	+	48	21
-	+	117	17
-	+	510	32
-	+	520	0
-	+	515	0
-	+	261	2
-	+	284	2
-	+	261	2
-	+	284	3
-	+	506	19
-	+	637	0
-	+	204	45
-	+	208	0
-	+	205	0
-	+	208	0
-	+	207	0
-	+	208	0
-	+	206	0
-	+	59	16
-	+	62	5
-	+	61	23
+	"	657	5
+	^	35	27
+	.	35	27
 	+	60	6
 	+	157	5
 	+	155	30
 	+	156	17
+	+	102	25
+	+	35	28
+	+	647	31
+	+	647	0
+	+	647	37
+	+	647	1
+	+	33	4
+	+	647	20
+	+	647	0
+	+	647	17
+	+	667	0
+	+	649	26
+	+	664	1
+	+	651	22
+	+	654	27
+	+	664	33
+	+	654	22
+	+	658	8
+	+	659	0
+	+	656	28
+	+	655	14
+	+	655	11
+	+	656	0
+	+	659	0
+	+	657	0
+	+	647	0
+	+	660	0
+	+	664	0
+	+	647	0
+	+	661	40
+	+	663	19
+	+	652	20
+	+	663	20
+	+	685	2
+	+	672	27
+	+	672	5
+	+	672	5
+	+	672	31
+	+	672	60
+	+	672	62
+	+	685	2
+	+	672	57
+	+	672	31
+	+	685	2
+	+	685	0
+	+	673	0
+	+	670	15
+	+	673	40
+	+	675	13
+	+	668	27
+	+	675	9
+	+	668	28
+	+	675	31
+	+	679	0
+	+	676	0
+	+	675	10
+	+	676	18
+	+	677	29
+	+	678	3
+	+	683	3
+	+	681	27
+	+	682	21
+	+	669	0
+	+	671	0
+	+	33	0
+	+	23	21
+	+	157	28
+	+	155	57
+	+	672	49
+	+	677	24
+	+	681	21
+	+	658	7
+	+	158	1
+	+	157	1
+	+	686	1
+	+	692	0
+	+	687	71
+	+	688	90
+	+	691	14
+	+	274	0
+	+	273	14
+	+	278	5
+	+	277	60
+	+	354	25
+	+	355	0
+	+	362	0
+	+	354	25
+	+	361	2
+	+	27	0
+	+	18	73
+	+	18	73
+	+	359	0
+	+	359	37
+	+	668	26
+	+	649	24
+	+	35	27
 	a	217	2
 
 > ~/pintos/src/threads/init.c
-	"	260	15
-	^	263	30
-	.	263	29
+	"	341	14
+	^	262	40
+	.	262	40
 	+	135	21
 	+	65	0
 	+	41	8
@@ -410,65 +486,13 @@ $sys_exit
 	+	264	0
 	+	262	41
 	+	263	29
+	+	262	40
 
-> ~/pintos/src/threads/thread.h
-	"	16	3
-	^	16	4
-	.	8	9
-	+	9	27
-	+	7	26
-	+	94	0
-	+	94	0
-	+	103	0
-	+	111	0
-	+	106	211
-	+	104	0
-	+	106	97
-	+	106	0
-	+	106	33
-	+	106	33
-	+	111	0
-	+	104	40
-	+	104	33
-	+	104	34
-	+	104	16
-	+	106	33
-	+	105	18
-	+	104	29
-	+	104	0
-	+	104	0
-	+	106	30
-	+	104	15
-	+	103	1
-	+	111	1
-	+	96	14
-	+	99	18
-	+	100	13
-	+	90	15
-	+	104	0
-	+	106	32
-	+	110	4
-	+	104	15
-	+	110	12
-	+	117	16
-	+	122	0
-	+	121	0
-	+	122	0
-	+	121	0
-	+	120	0
-	+	119	0
-	+	118	0
-	+	120	0
-	+	121	0
-	+	120	19
-	+	112	26
-	+	113	26
-	+	28	0
-	+	157	0
-	+	158	0
-	+	9	0
-	+	8	26
-	+	8	9
+> ~/pintos/src/threads/init.h
+	"	1	0
+
+> ~/pintos/src/devices/timer.
+	"	1	0
 
 > ~/.gitconfig
 	"	1	0
@@ -971,9 +995,6 @@ $sys_exit
 
 > ~/pintos/src/tests/userprog/args_multiple.ck
 	"	1	0
-
-> ~/pintos/src/threads/init.h
-	"	2	7
 
 > ~/lib_hw1/testlib.c
 	"	428	33

@@ -4,7 +4,7 @@
 #	name = kdw9502
 #	email = kdw9502@gmail.com
 [push]
-	default = matching
+	default = simple
 [user]
 	name = kdw9502
 	email = kdw9502@gmail.com
