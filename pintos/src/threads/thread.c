@@ -14,7 +14,7 @@
 #ifdef USERPROG
 #include "userprog/process.h"
 #endif
-
+//#define DEBUG
 bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	);
 /* Random value for struct thread's `magic' member.
    Used to detect stack overflow.  See the big comment at the top
@@ -61,6 +61,7 @@ static unsigned thread_ticks;   /* # of timer ticks since last yield. */
 #ifndef USERPROG
 //proj3
 bool thread_prior_aging;
+int64_t age;
 #endif
 
 /* If false (default), use round-robin scheduler.
@@ -154,8 +155,10 @@ thread_tick (void)
   //proj3
   if(wake_tick<=timer_ticks())thread_wake_up(timer_ticks());  
 
-//  if(thread_prior_aging== true)
-//	  thread_aging();
+  if(thread_prior_aging== true){
+	  age++;
+	  thread_aging();
+  }
 #endif
 }
 
@@ -233,7 +236,10 @@ thread_create (const char *name, int priority,
 
   /* Add to run queue. */
   thread_unblock (t);
-
+  
+ //  if (priority > thread_current()->priority)
+//	       thread_yield ();
+  check_change();
   return tid;
 }
 
@@ -271,7 +277,7 @@ thread_unblock (struct thread *t)
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
 #ifdef USERPROG
-  list_push_back (&ready_list, &t->elem);
+//  list_push_back (&ready_list, &t->elem);
 #endif
 #ifndef USERPROG
   list_insert_ordered(&ready_list,&t->elem,priority_compare,0);
@@ -353,7 +359,7 @@ thread_yield (void)
   old_level = intr_disable ();
   if (cur != idle_thread){ 
 #ifdef USERPROG
-  list_push_back (&ready_list, &t->elem);
+//  list_push_back (&ready_list, &t->elem);
 #endif
 #ifndef USERPROG
   list_insert_ordered(&ready_list,&cur->elem,priority_compare,0);
@@ -386,6 +392,8 @@ void
 thread_set_priority (int new_priority) 
 {
   thread_current ()->priority = new_priority;
+//  thread_yield();
+  check_change();
 }
 
 /* Returns the current thread's priority. */
@@ -552,8 +560,11 @@ next_thread_to_run (void)
 {
   if (list_empty (&ready_list))
     return idle_thread;
-  else
+  else{
+    list_sort(&ready_list, priority_compare, NULL);
+
     return list_entry (list_pop_front (&ready_list), struct thread, elem);
+  }
 }
 
 /* Completes a thread switch by activating the new thread's page
@@ -644,20 +655,28 @@ allocate_tid (void)
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
 
-
+void check_change(){
+	if(list_empty(&ready_list)) return;
+	struct thread *front=list_entry(list_front(&ready_list),struct thread, elem);
+	if(thread_current()->priority<front->priority)thread_yield();
+}
 
 void thread_sleep(int64_t ticks){
 	struct thread *cur;
 	//인터럽트를 방지
 	enum intr_level old=intr_disable();
 	cur= thread_current();
+#ifdef DEBUG
+		printf("sleep: tick%d\n",ticks);
+#endif
 	if(cur==idle_thread){
 #ifdef DEBUG
 		printf("idle thread sleep\n");
 #endif
 		return;
 	}
-	if(wake_tick>ticks)wake_tick=ticks;
+	cur->wakeup_tick=ticks;
+	if(ticks<wake_tick)wake_tick=ticks;
 	list_push_back(&sleep_list,&cur->elem);
 	thread_block();
 	intr_set_level(old);
@@ -668,13 +687,18 @@ void thread_sleep(int64_t ticks){
 void thread_wake_up(int64_t ticks){
 	struct list_elem *e;
 	struct thread *temp;
-	wake_tick=9999999999;
+#ifdef DEBUG
+		printf("wake_up: %d\n",ticks);
+#endif
+	wake_tick=9999999;
 	for(e=list_begin(&sleep_list);e!=list_end(&sleep_list);){
 		temp=list_entry(e,struct thread,elem);
 
 		if(ticks<temp->wakeup_tick){
+	
 			e=list_next(e);
-			wake_tick=temp->wakeup_tick;
+			if(wake_tick>temp->wakeup_tick)
+				wake_tick=temp->wakeup_tick;
 			
 		}
 		else{
@@ -689,4 +713,11 @@ bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
 		return true;
 	else
 		return false;
+}
+void thread_aging(){
+	struct list_elem*e;
+	for (e = list_begin(&ready_list); e!= list_end(&ready_list);e = list_next(e))
+	{
+		list_entry(e, struct thread, elem)->priority++;
+	}
 }

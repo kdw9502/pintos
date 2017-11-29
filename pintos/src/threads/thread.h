@@ -25,7 +25,8 @@ typedef int tid_t;
 #define PRI_MIN 0                       /* Lowest priority. */
 #define PRI_DEFAULT 31                  /* Default priority. */
 #define PRI_MAX 63                      /* Highest priority. */
-
+bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	);
+void  check_change();
 int wake_tick;
 /* A kernel thread or user process.
 

@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/ticks
+~MSle0~/ordered
 
 # Last Substitute Search Pattern:
 ~MSle0&exit_process
@@ -18,10 +18,18 @@ $sys_exit
 
 # Command Line History (newest to oldest):
 :q
-:100
+:q!
+:Lq
 :wq
-:359
+:124
+:Wq
 :w
+:394
+:39
+:705
+:675
+:100
+:359
 :159
 :646
 :669
@@ -31,8 +39,6 @@ $sys_exit
 :262
 :75
 :69
-:Wq
-:q!
 :92
 :69\
 :145
@@ -61,21 +67,40 @@ $sys_exit
 :152
 :153
 :88
-:;wq
-:162
-:157
-:293
-:252
-:232
 
 # Search String History (newest to oldest):
+?/ordered
+?/thread_create
+?/list_empty
+?/old_level
+?/insert_or
+?/less
+?/list_push
+?//list_push
+?/set_pri
+?/set
+?/thread_set
+?/thread_creadte
+?/thread_yield
+?/thread_unblock
+?/yield
+?/yieeld
+?/high
+?/higher
+?/high_pri
+?/high_pro
+?/next_thread
+?/thead_create
+?/aging
+?/thread_tick
+?/TIME_SL
+?/DEBUG
+?/printf
+?/init
+?/thread_init
 ?/ticks
 ?/run_action
 ?/run_test
-?/init
-?/thread_create
-?/thread_yield
-?/thread_unblock
 ?/thread_aging
 ?/thread_prior
 ?/TIEM_S
@@ -94,31 +119,6 @@ $sys_exit
 ?/-mlf
 ?/sys_create
 ?/wake
-? exit_process
-? close_file
-?/list_search
-?/get_user
-?/running
-? check_ptr
-? place_holder_ptr
-? symbol
-?/Adds a
-?/install
-?/install_page
-?/shutdown
-?/-100
-?/close
-?/close_
-?/close_file
-?/close_files
-?/files
-?/lock
-?/exit
-?/load
-?/load af
-?/printf
-?/in
-?/load (
 
 # Expression History (newest to oldest):
 
@@ -128,142 +128,357 @@ $sys_exit
 
 # Registers:
 "0	LINE	0
-	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
-""1	LINE	0
-	bool cmp_waketick(struct list_elem *first, struct list_elem *second, void *aux);
+	void check_change(){
+"1	LINE	0
+	  check_change();
 "2	LINE	0
-	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
+	bool priority_compare();
 "3@	LINE	0
-	bool priority_compare(struct list_elem *a,struct list_elem *b,void *aux	){
+	  check_change();
 "4	LINE	0
-	    list_push_back (&ready_list, &cur->elem);
+	 출처: http://maplejune.tistory.com/entry/Pintos-프로젝트-1-Priority-Scheduling [maplejune.tistory.com]dd
 "5	LINE	0
-	  thread_wake_up();
+	  run_higher_priority();
 "6	LINE	0
-	  if(wake_tick<=ticks)thread_wake_up(ticks);  
+	  run_higher_priority();
 "7	LINE	0
-	int wake_tick;
+	
 "8	LINE	0
-		wake_tick=9999999999;
+	
 "9	LINE	0
-		e=list_begin(&sleep_list);
-"-	CHAR	0
-	e
+	   출처: http://maplejune.tistory.com/entry/Pintos-프로젝트-1-Priority-Scheduling [maplejune.tistory.com]
+""-	CHAR	0
+	/
 
 # File marks:
-'0  100  14  ~/pintos/src/devices/timer.c
-'1  134  5  ~/pintos/src/threads/thread.h
-'2  657  5  ~/pintos/src/threads/thread.c
-'3  548  25  ~/pintos/src/threads/thread.c
-'4  1  0  ~/pintos/src/threads/thread.c
-'5  172  0  ~/pintos/src/threads/thread.h
-'6  35  28  ~/pintos/src/threads/thread.c
-'7  253  5  ~/pintos/src/threads/init.c
-'8  359  37  ~/pintos/src/threads/thread.c
-'9  18  73  ~/pintos/src/threads/thread.c
+'0  28  0  ~/pintos/src/tests/threads/priority-lifo.c
+'1  723  0  ~/pintos/src/threads/thread.c
+'2  65  0  ~/pintos/src/tests/threads/priority-fifo.c
+'3  47  0  ~/pintos/src/tests/threads/priority-lifo.c
+'4  58  28  ~/pintos/src/tests/threads/Make.tests
+'5  1  0  ~/pintos/src/tests/threads/Make.test
+'6  122  16  ~/pintos/src/threads/synch.c
+'7  29  3  ~/pintos/src/threads/thread.h
+'8  241  1  ~/pintos/src/threads/thread.c
+'9  28  73  ~/pintos/src/threads/thread.h
 
 # Jumplist (newest first):
--'  100  14  ~/pintos/src/devices/timer.c
--'  1  0  ~/pintos/src/devices/timer.c
--'  134  5  ~/pintos/src/threads/thread.h
+-'  28  0  ~/pintos/src/tests/threads/priority-lifo.c
+-'  1  0  ~/pintos/src/tests/threads/priority-lifo.c
+-'  723  0  ~/pintos/src/threads/thread.c
+-'  365  14  ~/pintos/src/threads/thread.c
+-'  460  0  ~/pintos/src/threads/thread.c
+-'  283  14  ~/pintos/src/threads/thread.c
+-'  280  0  ~/pintos/src/threads/thread.c
+-'  712  1  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/threads/thread.c
+-'  65  0  ~/pintos/src/tests/threads/priority-fifo.c
+-'  1  0  ~/pintos/src/tests/threads/priority-fifo.c
+-'  47  0  ~/pintos/src/tests/threads/priority-lifo.c
+-'  58  28  ~/pintos/src/tests/threads/Make.tests
+-'  1  0  ~/pintos/src/tests/threads/Make.tests
+-'  1  0  ~/pintos/src/tests/threads/Make.test
+-'  122  16  ~/pintos/src/threads/synch.c
+-'  1  0  ~/pintos/src/threads/synch.c
+-'  29  3  ~/pintos/src/threads/thread.h
 -'  1  0  ~/pintos/src/threads/thread.h
--'  657  5  ~/pintos/src/threads/thread.c
--'  147  11  ~/pintos/src/threads/thread.c
--'  144  9  ~/pintos/src/threads/thread.c
--'  141  9  ~/pintos/src/threads/thread.c
--'  59  46  ~/pintos/src/threads/thread.c
--'  58  46  ~/pintos/src/threads/thread.c
--'  55  46  ~/pintos/src/threads/thread.c
--'  54  46  ~/pintos/src/threads/thread.c
--'  53  46  ~/pintos/src/threads/thread.c
--'  35  28  ~/pintos/src/threads/thread.c
--'  675  5  ~/pintos/src/threads/thread.c
--'  668  28  ~/pintos/src/threads/thread.c
--'  660  30  ~/pintos/src/threads/thread.c
--'  649  26  ~/pintos/src/threads/thread.c
--'  608  16  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
--'  548  25  ~/pintos/src/threads/thread.c
--'  172  0  ~/pintos/src/threads/thread.h
--'  586  9  ~/pintos/src/threads/thread.c
--'  167  41  ~/pintos/src/threads/thread.c
--'  166  65  ~/pintos/src/threads/thread.c
--'  155  51  ~/pintos/src/threads/thread.c
--'  150  15  ~/pintos/src/threads/thread.c
--'  630  11  ~/pintos/src/threads/thread.c
--'  253  5  ~/pintos/src/threads/init.c
--'  158  7  ~/pintos/src/threads/init.c
--'  155  31  ~/pintos/src/threads/init.c
--'  147  4  ~/pintos/src/threads/init.c
--'  140  45  ~/pintos/src/threads/init.c
--'  127  10  ~/pintos/src/threads/init.c
--'  125  6  ~/pintos/src/threads/init.c
--'  120  9  ~/pintos/src/threads/init.c
--'  115  10  ~/pintos/src/threads/init.c
--'  114  12  ~/pintos/src/threads/init.c
--'  112  8  ~/pintos/src/threads/init.c
--'  111  6  ~/pintos/src/threads/init.c
--'  110  8  ~/pintos/src/threads/init.c
--'  109  7  ~/pintos/src/threads/init.c
--'  105  6  ~/pintos/src/threads/init.c
--'  104  6  ~/pintos/src/threads/init.c
--'  100  9  ~/pintos/src/threads/init.c
--'  99  9  ~/pintos/src/threads/init.c
--'  98  9  ~/pintos/src/threads/init.c
--'  95  10  ~/pintos/src/threads/init.c
--'  91  10  ~/pintos/src/threads/init.c
--'  90  9  ~/pintos/src/threads/init.c
--'  82  6  ~/pintos/src/threads/init.c
--'  61  19  ~/pintos/src/threads/init.c
--'  60  16  ~/pintos/src/threads/init.c
--'  42  10  ~/pintos/src/threads/init.c
--'  1  18  ~/pintos/src/threads/init.c
--'  281  9  ~/pintos/src/threads/init.c
--'  278  5  ~/pintos/src/threads/init.c
--'  256  15  ~/pintos/src/threads/init.c
--'  188  48  ~/pintos/src/threads/init.c
--'  166  24  ~/pintos/src/threads/init.c
--'  164  7  ~/pintos/src/threads/init.c
--'  101  0  ~/pintos/src/threads/init.c
--'  359  37  ~/pintos/src/threads/thread.c
--'  18  73  ~/pintos/src/threads/thread.c
--'  186  0  ~/pintos/src/threads/thread.c
--'  177  10  ~/pintos/src/threads/thread.c
--'  176  20  ~/pintos/src/threads/thread.c
--'  122  2  ~/pintos/src/threads/thread.c
--'  93  0  ~/pintos/src/threads/thread.c
--'  362  2  ~/pintos/src/threads/thread.c
--'  278  5  ~/pintos/src/threads/thread.c
--'  241  25  ~/pintos/src/threads/thread.c
--'  235  2  ~/pintos/src/threads/thread.c
--'  202  0  ~/pintos/src/threads/thread.c
--'  692  0  ~/pintos/src/threads/thread.c
--'  97  0  ~/pintos/src/threads/thread.h
--'  688  45  ~/pintos/src/threads/thread.c
--'  157  1  ~/pintos/src/threads/thread.c
--'  158  1  ~/pintos/src/threads/thread.c
--'  658  7  ~/pintos/src/threads/thread.c
--'  681  21  ~/pintos/src/threads/thread.c
--'  677  24  ~/pintos/src/threads/thread.c
--'  672  48  ~/pintos/src/threads/thread.c
--'  657  5  ~/pintos/src/threads/thread.c
--'  147  11  ~/pintos/src/threads/thread.c
--'  144  9  ~/pintos/src/threads/thread.c
--'  141  9  ~/pintos/src/threads/thread.c
--'  59  46  ~/pintos/src/threads/thread.c
--'  58  46  ~/pintos/src/threads/thread.c
--'  55  46  ~/pintos/src/threads/thread.c
--'  54  46  ~/pintos/src/threads/thread.c
--'  53  46  ~/pintos/src/threads/thread.c
--'  35  28  ~/pintos/src/threads/thread.c
--'  675  5  ~/pintos/src/threads/thread.c
--'  668  28  ~/pintos/src/threads/thread.c
--'  660  30  ~/pintos/src/threads/thread.c
--'  649  26  ~/pintos/src/threads/thread.c
--'  608  16  ~/pintos/src/threads/thread.c
--'  1  0  ~/pintos/src/threads/thread.c
+-'  241  1  ~/pintos/src/threads/thread.c
+-'  130  0  ~/pintos/src/threads/thread.c
+-'  63  18  ~/pintos/src/threads/synch.c
+-'  125  18  ~/pintos/src/threads/synch.c
+-'  95  19  ~/pintos/src/threads/synch.c
+-'  28  73  ~/pintos/src/threads/thread.h
+-'  711  8  ~/pintos/src/threads/thread.c
+-'  30  23  ~/pintos/src/threads/thread.h
+-'  2  0  ~/pintos/src/threads/synch.c
+-'  72  82  ~/pintos/src/threads/synch.c
+-'  397  0  ~/pintos/src/threads/thread.c
+-'  286  7  ~/pintos/src/threads/thread.c
+-'  235  7  ~/pintos/src/threads/thread.c
+-'  185  21  ~/pintos/src/threads/thread.c
+-'  52  0  ~/pintos/src/threads/thread.c
+-'  58  0  ~/pintos/src/threads/thread.c
+-'  395  16  ~/pintos/src/threads/thread.c
+-'  17  0  ~/pintos/src/threads/thread.c
+-'  233  2  ~/pintos/src/threads/thread.c
+-'  180  10  ~/pintos/src/threads/thread.c
+-'  179  20  ~/pintos/src/threads/thread.c
+-'  123  2  ~/pintos/src/threads/thread.c
+-'  93  3  ~/pintos/src/threads/thread.c
+-'  393  0  ~/pintos/src/threads/thread.c
+-'  658  19  ~/pintos/src/threads/thread.c
+-'  561  6  ~/pintos/src/threads/thread.c
+-'  337  11  ~/pintos/src/threads/thread.c
+-'  659  13  ~/pintos/src/threads/thread.c
+-'  247  25  ~/pintos/src/threads/thread.c
+-'  238  2  ~/pintos/src/threads/thread.c
+-'  263  54  ~/pintos/src/threads/thread.c
+-'  152  9  ~/pintos/src/threads/thread.c
+-'  59  63  ~/pintos/src/threads/thread.c
+-'  721  1  ~/pintos/src/threads/thread.c
+-'  1  0  ~/pintos/src/tests/threads/thread.c
+-'  28  41  ~/pintos/src/tests/threads/priority-change.c
+-'  1  0  ~/pintos/src/tests/threads/priority-change.c
+-'  564  42  ~/pintos/src/threads/thread.c
+-'  277  2  ~/pintos/src/threads/thread.c
+-'  444  34  ~/pintos/src/threads/thread.c
+-'  76  22  ~/pintos/src/threads/thread.c
+-'  18  0  ~/pintos/src/threads/thread.c
+-'  394  0  ~/pintos/src/threads/thread.c
+-'  243  2  ~/pintos/src/threads/thread.c
+-'  14  0  ~/pintos/src/threads/thread.c
+-'  66  0  ~/pintos/src/threads/thread.c
+-'  64  11  ~/pintos/src/threads/thread.c
+-'  597  2  ~/pintos/src/threads/thread.c
+-'  596  2  ~/pintos/src/threads/thread.c
+-'  160  10  ~/pintos/src/threads/thread.c
+-'  158  18  ~/pintos/src/threads/thread.c
+-'  63  18  ~/pintos/src/threads/thread.c
+-'  151  24  ~/pintos/src/threads/thread.c
+-'  717  14  ~/pintos/src/threads/thread.c
+-'  259  13  ~/pintos/src/threads/thread.c
+-'  181  10  ~/pintos/src/threads/thread.c
+-'  124  0  ~/pintos/src/threads/thread.c
+-'  701  17  ~/pintos/src/threads/thread.c
+-'  704  2  ~/pintos/src/threads/thread.c
+-'  680  16  ~/pintos/src/threads/thread.c
+-'  691  29  ~/pintos/src/threads/thread.c
+-'  697  13  ~/pintos/src/threads/thread.c
+-'  169  2  ~/pintos/src/threads/thread.c
+-'  716  0  ~/pintos/src/threads/thread.c
+-'  507  14  ~/pintos/src/threads/thread.c
+-'  441  12  ~/pintos/src/threads/thread.c
+-'  440  46  ~/pintos/src/threads/thread.c
+-'  439  22  ~/pintos/src/threads/thread.c
+-'  215  37  ~/pintos/src/threads/thread.c
+-'  209  2  ~/pintos/src/threads/thread.c
+-'  174  57  ~/pintos/src/threads/thread.c
+-'  128  33  ~/pintos/src/threads/thread.c
+-'  122  7  ~/pintos/src/threads/thread.c
+-'  113  0  ~/pintos/src/threads/thread.c
+-'  98  0  ~/pintos/src/threads/thread.c
+-'  23  0  ~/pintos/src/threads/thread.c
+-'  723  0  ~/pintos/src/threads/thread.c
+-'  365  14  ~/pintos/src/threads/thread.c
+-'  460  0  ~/pintos/src/threads/thread.c
 
 # History of marks within files (newest to oldest):
+
+> ~/pintos/src/tests/threads/priority-lifo.c
+	"	28	0
+
+> ~/pintos/src/threads/thread.c
+	"	723	0
+	^	712	1
+	.	280	0
+	+	27	0
+	+	18	73
+	+	18	73
+	+	365	0
+	+	365	37
+	+	687	26
+	+	664	24
+	+	35	27
+	+	669	0
+	+	670	20
+	+	690	0
+	+	17	12
+	+	670	20
+	+	691	23
+	+	693	11
+	+	691	25
+	+	697	14
+	+	691	29
+	+	695	0
+	+	695	0
+	+	680	1
+	+	678	23
+	+	698	1
+	+	697	9
+	+	679	35
+	+	680	0
+	+	700	15
+	+	701	0
+	+	17	1
+	+	717	0
+	+	717	36
+	+	717	29
+	+	717	85
+	+	717	68
+	+	717	61
+	+	717	68
+	+	717	15
+	+	239	23
+	+	397	0
+	+	717	37
+	+	717	14
+	+	158	0
+	+	160	0
+	+	62	0
+	+	63	24
+	+	64	11
+	+	158	31
+	+	161	0
+	+	159	8
+	+	723	0
+	+	723	0
+	+	718	0
+	+	723	0
+	+	722	12
+	+	718	0
+	+	719	61
+	+	721	64
+	+	722	0
+	+	721	47
+	+	717	0
+	+	239	2
+	+	240	45
+	+	243	110
+	+	243	0
+	+	243	0
+	+	397	0
+	+	563	6
+	+	567	0
+	+	564	0
+	+	564	45
+	+	566	110
+	+	566	0
+	+	564	3
+	+	277	2
+	+	564	42
+	+	280	1
+	+	362	1
+	+	662	0
+	+	659	36
+	+	661	29
+	+	660	0
+	+	661	30
+	+	660	76
+	+	661	44
+	+	660	20
+	+	661	59
+	+	397	16
+	+	17	1
+	+	397	0
+	+	395	16
+	+	661	60
+	+	395	19
+	+	396	16
+	+	239	0
+	+	242	0
+	+	240	2
+	+	241	1
+	+	280	0
+	+	365	3
+	+	280	0
+	a	220	2
+
+> ~/pintos/src/tests/threads/priority-fifo.c
+	"	65	0
+
+> ~/pintos/src/tests/threads/Make.tests
+	"	58	28
+	^	58	29
+	.	58	28
+	+	58	28
+
+> ~/pintos/src/tests/threads/Make.test
+	"	1	0
+
+> ~/pintos/src/threads/synch.c
+	"	122	16
+	^	122	17
+	.	122	16
+	+	71	66
+	+	72	84
+	+	72	82
+	+	122	16
+
+> ~/pintos/src/threads/thread.h
+	"	29	3
+	^	29	4
+	.	29	3
+	+	9	27
+	+	7	26
+	+	97	0
+	+	97	0
+	+	106	0
+	+	114	0
+	+	109	211
+	+	107	0
+	+	109	97
+	+	109	0
+	+	109	33
+	+	109	33
+	+	114	0
+	+	107	40
+	+	107	33
+	+	107	34
+	+	107	16
+	+	109	33
+	+	108	18
+	+	107	29
+	+	107	0
+	+	107	0
+	+	109	30
+	+	107	15
+	+	106	1
+	+	114	1
+	+	99	14
+	+	102	18
+	+	103	13
+	+	93	15
+	+	107	0
+	+	109	32
+	+	113	4
+	+	107	15
+	+	113	12
+	+	124	16
+	+	129	0
+	+	128	0
+	+	129	0
+	+	128	0
+	+	127	0
+	+	126	0
+	+	125	0
+	+	127	0
+	+	128	0
+	+	127	19
+	+	115	26
+	+	119	26
+	+	31	0
+	+	164	0
+	+	165	0
+	+	9	0
+	+	8	26
+	+	8	9
+	+	119	19
+	+	116	15
+	+	120	5
+	+	118	10
+	+	24	0
+	+	173	23
+	+	174	11
+	+	173	11
+	+	174	24
+	+	30	0
+	+	13	0
+	+	10	30
+	+	173	24
+	+	174	26
+	+	173	0
+	+	119	9
+	+	30	23
+	+	28	0
+	+	30	0
+	+	28	73
+	+	29	3
+
+> ~/pintos/src/tests/threads/thread.c
+	"	1	0
+
+> ~/pintos/src/tests/threads/priority-change.c
+	"	28	41
 
 > ~/pintos/src/devices/timer.c
 	"	100	14
@@ -290,187 +505,6 @@ $sys_exit
 	+	180	0
 	+	19	10
 	+	180	0
-
-> ~/pintos/src/threads/thread.h
-	"	134	5
-	^	134	6
-	.	118	9
-	+	9	27
-	+	7	26
-	+	96	0
-	+	96	0
-	+	105	0
-	+	113	0
-	+	108	211
-	+	106	0
-	+	108	97
-	+	108	0
-	+	108	33
-	+	108	33
-	+	113	0
-	+	106	40
-	+	106	33
-	+	106	34
-	+	106	16
-	+	108	33
-	+	107	18
-	+	106	29
-	+	106	0
-	+	106	0
-	+	108	30
-	+	106	15
-	+	105	1
-	+	113	1
-	+	98	14
-	+	101	18
-	+	102	13
-	+	92	15
-	+	106	0
-	+	108	32
-	+	112	4
-	+	106	15
-	+	112	12
-	+	123	16
-	+	128	0
-	+	127	0
-	+	128	0
-	+	127	0
-	+	126	0
-	+	125	0
-	+	124	0
-	+	126	0
-	+	127	0
-	+	126	19
-	+	114	26
-	+	118	26
-	+	30	0
-	+	163	0
-	+	164	0
-	+	9	0
-	+	8	26
-	+	8	9
-	+	118	19
-	+	115	15
-	+	119	5
-	+	117	10
-	+	24	0
-	+	172	23
-	+	173	11
-	+	172	11
-	+	173	24
-	+	29	0
-	+	13	0
-	+	10	30
-	+	172	24
-	+	173	26
-	+	172	0
-	+	118	9
-
-> ~/pintos/src/threads/thread.c
-	"	657	5
-	^	35	27
-	.	35	27
-	+	60	6
-	+	157	5
-	+	155	30
-	+	156	17
-	+	102	25
-	+	35	28
-	+	647	31
-	+	647	0
-	+	647	37
-	+	647	1
-	+	33	4
-	+	647	20
-	+	647	0
-	+	647	17
-	+	667	0
-	+	649	26
-	+	664	1
-	+	651	22
-	+	654	27
-	+	664	33
-	+	654	22
-	+	658	8
-	+	659	0
-	+	656	28
-	+	655	14
-	+	655	11
-	+	656	0
-	+	659	0
-	+	657	0
-	+	647	0
-	+	660	0
-	+	664	0
-	+	647	0
-	+	661	40
-	+	663	19
-	+	652	20
-	+	663	20
-	+	685	2
-	+	672	27
-	+	672	5
-	+	672	5
-	+	672	31
-	+	672	60
-	+	672	62
-	+	685	2
-	+	672	57
-	+	672	31
-	+	685	2
-	+	685	0
-	+	673	0
-	+	670	15
-	+	673	40
-	+	675	13
-	+	668	27
-	+	675	9
-	+	668	28
-	+	675	31
-	+	679	0
-	+	676	0
-	+	675	10
-	+	676	18
-	+	677	29
-	+	678	3
-	+	683	3
-	+	681	27
-	+	682	21
-	+	669	0
-	+	671	0
-	+	33	0
-	+	23	21
-	+	157	28
-	+	155	57
-	+	672	49
-	+	677	24
-	+	681	21
-	+	658	7
-	+	158	1
-	+	157	1
-	+	686	1
-	+	692	0
-	+	687	71
-	+	688	90
-	+	691	14
-	+	274	0
-	+	273	14
-	+	278	5
-	+	277	60
-	+	354	25
-	+	355	0
-	+	362	0
-	+	354	25
-	+	361	2
-	+	27	0
-	+	18	73
-	+	18	73
-	+	359	0
-	+	359	37
-	+	668	26
-	+	649	24
-	+	35	27
-	a	217	2
 
 > ~/pintos/src/threads/init.c
 	"	341	14
@@ -1208,127 +1242,4 @@ $sys_exit
 	"	1	0
 
 > ~/os_hw1_tester/bitmap_expand.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_expand.out
-	"	2	0
-
-> ~/lib_hw1/main.h
-	"	8	17
-	^	8	18
-	.	8	17
-	+	11	0
-	+	10	34
-	+	13	0
-	+	24	0
-	+	18	27
-	+	22	0
-	+	18	16
-	+	20	1
-	+	13	16
-	+	17	8
-	+	21	17
-	+	21	19
-	+	14	24
-	+	16	22
-	+	14	24
-	+	16	26
-	+	17	0
-	+	16	0
-	+	16	0
-	+	15	0
-	+	22	12
-	+	24	27
-	+	10	28
-	+	24	27
-	+	10	17
-	+	24	39
-	+	13	24
-	+	17	9
-	+	20	14
-	+	7	21
-	+	10	20
-	+	24	0
-	+	22	13
-	+	35	0
-	+	35	8
-	+	35	10
-	+	35	22
-	+	35	17
-	+	35	0
-	+	35	26
-	+	35	18
-	+	35	20
-	+	35	0
-	+	35	12
-	+	35	0
-	+	35	23
-	+	35	0
-	+	35	17
-	+	35	18
-	+	35	42
-	+	35	23
-	+	35	51
-	+	35	31
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	35	0
-	+	36	80
-	+	38	0
-	+	37	0
-	+	37	3
-	+	36	16
-	+	40	59
-	+	5	18
-	+	6	0
-	+	37	29
-	+	39	33
-	+	39	0
-	+	2	14
-	+	47	59
-	+	39	29
-	+	37	24
-	+	36	33
-	+	39	11
-	+	38	18
-	+	43	76
-	+	48	70
-	+	50	23
-	+	48	41
-	+	50	59
-	+	51	49
-	+	45	8
-	+	42	24
-	+	49	56
-	+	51	47
-	+	44	0
-	+	44	47
-	+	51	38
-	+	30	7
-	+	46	77
-	+	8	17
-
-> ~/os_hw1_tester/bitmap_scan_flip.in
-	"	1	0
-
-> ~/os_hw1_tester/hash_insert.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_all.in
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_all.output
-	"	1	0
-
-> ~/os_hw1_tester/bitmap_all.out
 	"	1	0
